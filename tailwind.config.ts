@@ -38,29 +38,38 @@ export default {
           "50%": { filter: "hue-rotate(180deg)" },
         },
       },
-    },
-    typography: (theme: (i: string) => void) => ({
-      custom: {
-        css: {
-          "--tw-prose-body": theme("colors.textColor / 1"),
-          "--tw-prose-headings": theme("colors.accent2 / 1"),
-          "--tw-prose-links": theme("colors.textColor / 1"),
-          "--tw-prose-bold": theme("colors.textColor / 1"),
-          "--tw-prose-bullets": theme("colors.textColor / 1"),
-          "--tw-prose-quotes": theme("colors.quote / 1"),
-          "--tw-prose-code": theme("colors.textColor / 1"),
-          "--tw-prose-hr": `0.5px dashed ${theme("colors.textColor / 0.5")}`,
-          "--tw-prose-th-borders": theme("colors.textColor / 0.5"),
-        },
-      },
-      DEFAULT: {
-        css: {
-          a: {
-            "@apply wavy-link": "",
+      typography: (theme: (i: string) => void) => ({
+        custom: {
+          css: {
+            "--tw-prose-body": theme("colors.textColor / 1"),
+            "--tw-prose-headings": theme("colors.accent / 1"),
+            "--tw-prose-links": theme("colors.textColor / 1"),
+            "--tw-prose-bold": theme("colors.textColor / 1"),
+            "--tw-prose-bullets": theme("colors.textColor / 1"),
+            "--tw-prose-quotes": theme("colors.textColor / 1"),
+            "--tw-prose-code": theme("colors.textColor / 1"),
+            "--tw-prose-quote-borders": theme("colors.accent / 1"),
+            "--tw-prose-hr": `0.5px dashed ${theme("colors.textColor / 0.5")}`,
+            "--tw-prose-th-borders": theme("colors.textColor / 0.5"),
           },
         },
-      },
-    }),
+        DEFAULT: {
+          css: {
+            a: {
+              "@apply underline": "",
+            },
+            blockquote: {
+              "@apply animate-hue-rotate font-grotesk not-italic font-semibold mx-6":
+                "",
+            },
+            code: {
+              "@apply bg-black/30 px-2 before:hidden after:hidden rounded-sm":
+                "",
+            },
+          },
+        },
+      }),
+    },
   },
   plugins: [
     typography,
@@ -80,9 +89,9 @@ export default {
             "",
         },
         ".underline": {
-          "text-underline-offset": "0.25em",
-          "@apply inline-block animate-hue-rotate": "",
-          "text-decoration": "hsl(var(--theme-accent) / 1) underline",
+          "text-underline-offset": "0.4em",
+          "@apply transition-colors ease-in inline-block font-semibold animate-hue-rotate decoration-accent decoration-[3px] hover:bg-accent px-1 hover:no-underline hover:text-bgColor":
+            "",
         },
       });
     }),

@@ -12,7 +12,9 @@ const { post } = Astro.props;
 
 <BaseLayout title={post.data.title} description={post.data.description}>
   <Hero {post} />
-  <article class="prose prose-sm prose-custom">
+  <article
+    class="prose prose-md prose-custom prose-headings:font-semibold prose-headings:text-textColor prose-headings:before:animate-hue-rotate prose-headings:before:absolute prose-headings:before:-ms-8 prose-headings:before:text-accent prose-headings:before:content-['#'] prose-th:before:content-none"
+  >
     <slot />
   </article>
 </BaseLayout>

@@ -22,7 +22,7 @@ const recents = sort.date(allPosts).slice(0, MAX);
   </section>
   <section>
     <Heading>Posts</Heading>
-    <ul>
+    <ul class="flex flex-col gap-3">
       {recents.map((post) => <Preview as="li" {post} />)}
     </ul>
   </section>
