@@ -56,7 +56,7 @@ export default {
         DEFAULT: {
           css: {
             a: {
-              "@apply underline": "",
+              "@apply link-dotted": "",
             },
             blockquote: {
               "@apply animate-hue-rotate font-grotesk not-italic font-semibold mx-6":
@@ -82,16 +82,27 @@ export default {
           "animation-duration": "60s",
           "animation-iteration-count": "infinite",
         },
-        ".wavy-link": {
-          "text-underline-offset": "0.25em",
-          "text-decoration": "hsl(var(--theme-accent) / 1) wavy underline",
-          "@apply inline-block text-accent font-semibold animate-hue-rotate":
+        ".link": {
+          "@apply transition-colors text-accent ease-in inline-block px-1 font-semibold animate-hue-rotate decoration-accent hover:bg-accent hover:no-underline hover:text-bgColor":
             "",
         },
-        ".underline": {
+        ".link-wavy": {
+          "@apply link": "",
+          "text-decoration-style": "wavy",
+          "text-underline-offset": "0.25em",
+          "text-decoration-line": "underline",
+        },
+        ".link-dotted": {
+          "@apply link": "",
           "text-underline-offset": "0.4em",
-          "@apply transition-colors ease-in inline-block font-semibold animate-hue-rotate decoration-accent decoration-[3px] hover:bg-accent px-1 hover:no-underline hover:text-bgColor":
-            "",
+          "text-decoration-style": "dotted",
+          "text-decoration-line": "underline",
+        },
+        ".link-underline": {
+          "@apply link": "",
+          "text-underline-offset": "0.4em",
+          "text-decoration-style": "solid",
+          "text-decoration-line": "underline",
         },
       });
     }),

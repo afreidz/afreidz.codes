@@ -29,10 +29,6 @@
     @apply mx-auto flex min-h-screen flex-col items-center bg-bgColor text-textColor font-mono font-normal antialiased;
   }
 
-  body {
-    @apply before:content-["_"] before:h-0 before:w-full before:border-t-4 before:border-accent before:animate-hue-rotate;
-  }
-
   @keyframes hue-rotate {
     0%,
     100% {

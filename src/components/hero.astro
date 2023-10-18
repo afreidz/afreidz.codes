@@ -12,7 +12,12 @@ const { post } = Astro.props;
 const { remarkPluginFrontmatter: frontmatter } = await post.render();
 ---
 
-<Heading as="h1" class="mb-3" transition:name={`${post.slug}.title`}>
+<Heading
+  as="h1"
+  type="title"
+  class="mb-3"
+  transition:name={`${post.slug}.title`}
+>
   {post.data.title}
 </Heading>
 <p class="font-semibold" class:list={{ "mb-10": !post.data.tags.length }}>
@@ -28,7 +33,7 @@ const { remarkPluginFrontmatter: frontmatter } = await post.render();
           <li>
             <a
               href={`/tags/${tag}/`}
-              class="inline-block underline before:content-['#']"
+              class="inline-block link-dotted before:content-['#_']"
               aria-label={`View more blogs with the tag ${tag}`}
             >
               {tag}

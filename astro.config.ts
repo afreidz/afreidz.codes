@@ -5,6 +5,7 @@ import tailwind from "@astrojs/tailwind";
 import { defineConfig } from "astro/config";
 import { calculateReadingTime } from "./src/utils/readingTime";
 
+// https://astro.build/config
 export default defineConfig({
   site: "https://afreidz.codes",
   markdown: {

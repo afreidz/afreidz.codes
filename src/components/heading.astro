@@ -12,10 +12,12 @@ const { as: Tag = "h2", type = "default", ...rest } = Astro.props;
   {...rest}
   class:list={{
     "mb-6": true,
-    "mt-14": true,
     "font-bold": true,
-    "text-4xl": type === "title",
-    "text-3xl": type === "default",
+    "font-grotesk": true,
+    "text-2xl": type == "title",
+    "text-xl": type == "default",
+    "lg:text-3xl": type === "title",
+    "lg:text-2xl": type === "default",
   }}
 >
   <slot />

@@ -3,18 +3,30 @@ import me from "@/assets/me.jpg";
 import { Image } from "astro:assets";
 ---
 
-<header class="mt-10 mb-6">
-  <a href="/" class="flex gap-3 items-center group">
+<header class="mt-10 mb-10">
+  <a
+    href="/"
+    class="flex gap-3 items-center group justify-center lg:justify-start"
+  >
     <Image
       src={me}
-      width="48"
-      height="48"
+      width="45"
+      height="45"
       alt="an image of me"
       class="rounded-full"
     />
-    <div class="flex flex-col justify-center">
-      <span class="font-ortho text-3xl animate-hue-rotate">afreidz</span>
-      <span>codes</span>
-    </div>
+    <strong>afreidz.codes</strong>
   </a>
+  <hr
+    class="mt-10 border-0 border-b-2 border-dotted border-accent animate-hue-rotate bg-transparent"
+  />
 </header>
+
+<style>
+  strong {
+    @apply text-3xl lg:text-5xl font-grotesk font-bold text-accent animate-hue-rotate bg-gradient-to-b from-accent to-accent/20 bg-clip-text;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: hsl(var(--theme-accent) / 1);
+    -webkit-text-fill-color: transparent;
+  }
+</style>

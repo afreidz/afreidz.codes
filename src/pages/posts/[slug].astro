@@ -14,9 +14,9 @@ export const getStaticPaths = (async () => {
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { post } = Astro.props;
-const { Content } = await post.render();
+const { Content, headings } = await post.render();
 ---
 
-<PostLayout {post}>
+<PostLayout {post} {headings}>
   <Content />
 </PostLayout>

@@ -1,0 +1,43 @@
+---
+import type { MarkdownHeading } from "astro";
+
+type Props = {
+  headings: MarkdownHeading[];
+};
+
+const { headings } = Astro.props;
+const linkClasses =
+  "block px-1 transition-colors hover:text-bgColor hover:bg-accent animate-hue-rotate line-clamp-2";
+---
+
+<aside class="sticky top-3 hidden order-2 max-w-[23%] h-max lg:block">
+  <h2 class="font-semibold">Table of Contents</h2>
+  <ul
+    class="mt-4 text-sm list-['#_'] marker:text-accent marker:animate-hue-rotate marker:text-base"
+  >
+    {
+      headings
+        .filter((h) => h.depth === 2)
+        .map((heading) => (
+          <li class="mb-2">
+            <a
+              class={linkClasses}
+              href={`#${heading.slug}`}
+              aria-label={`Scroll to section: ${heading.text}`}
+            >
+              {heading.text}
+            </a>
+          </li>
+        ))
+    }
+    <li class="mb-2">
+      <a
+        href="#comments"
+        class={linkClasses}
+        aria-label="Scroll to comments section"
+      >
+        🍿 Comments
+      </a>
+    </li>
+  </ul>
+</aside>

@@ -1,20 +1,46 @@
 ---
+import Giscus from "@giscus/svelte";
+import TOC from "@/components/toc.astro";
 import Hero from "@/components/hero.astro";
+import type { MarkdownHeading } from "astro";
 import BaseLayout from "@/layouts/base.astro";
 import type { CollectionEntry } from "astro:content";
 
 type Props = {
+  headings: MarkdownHeading[];
   post: CollectionEntry<"post">;
 };
 
-const { post } = Astro.props;
+const { post, headings } = Astro.props;
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <Hero {post} />
-  <article
-    class="prose prose-md prose-custom prose-headings:font-semibold prose-headings:text-textColor prose-headings:before:animate-hue-rotate prose-headings:before:absolute prose-headings:before:-ms-8 prose-headings:before:text-accent prose-headings:before:content-['#'] prose-th:before:content-none"
-  >
-    <slot />
-  </article>
+  <div class="flex gap-6 relative">
+    {!!headings.length && <TOC {headings} />}
+    <article class="flex-1 break-words px-4">
+      <Hero {post} />
+      <div
+        class="contents prose prose-sm lg:prose-base prose-custom prose-headings:font-grotesk prose-headings:font-bold prose-headings:text-textColor"
+      >
+        <slot />
+      </div>
+      <div class="my-10">
+        <Giscus
+          categoryId="DIC_kwDOKiA5os4CaPdb"
+          category="Blog Post Comments"
+          repo="afreidz/afreidz.codes"
+          theme="transparent_dark"
+          repoId="R_kgDOKiA5og"
+          reactionsEnabled="1"
+          inputPosition="top"
+          mapping="pathname"
+          emitMetadata="1"
+          id="comments"
+          client:idle
+          strict="0"
+          lang="en"
+        />
+      </div>
+    </article>
+  </div>
 </BaseLayout>
