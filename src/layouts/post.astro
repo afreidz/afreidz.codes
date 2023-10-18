@@ -17,7 +17,7 @@ const { post, headings } = Astro.props;
 <BaseLayout title={post.data.title} description={post.data.description}>
   <div class="flex gap-6 relative">
     {!!headings.length && <TOC {headings} />}
-    <article class="flex-1 break-words px-4">
+    <article class="flex-1 break-words">
       <Hero {post} />
       <div
         class="contents prose prose-sm lg:prose-base prose-custom prose-headings:font-grotesk prose-headings:font-bold prose-headings:text-textColor"

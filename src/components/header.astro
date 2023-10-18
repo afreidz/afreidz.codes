@@ -3,7 +3,7 @@ import me from "@/assets/me.jpg";
 import { Image } from "astro:assets";
 ---
 
-<header class="mt-10 mb-10">
+<header class="mt-6 lg:mt-10 mb-10">
   <a
     href="/"
     class="flex gap-3 items-center group justify-center lg:justify-start"
@@ -14,11 +14,12 @@ import { Image } from "astro:assets";
       height="45"
       alt="an image of me"
       class="rounded-full"
+      densities={[1, 1.5, 2]}
     />
     <strong>afreidz.codes</strong>
   </a>
   <hr
-    class="mt-10 border-0 border-b-2 border-dotted border-accent animate-hue-rotate bg-transparent"
+    class="mt-6 lg:mt-10 border-0 border-b-2 border-dotted border-accent animate-hue-rotate bg-transparent"
   />
 </header>
 

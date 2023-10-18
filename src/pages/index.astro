@@ -8,8 +8,6 @@ import { getAllPosts, sort } from "@/utils/data";
 const MAX = 10;
 const allPosts = await getAllPosts();
 const recents = sort.date(allPosts).slice(0, MAX);
-
-console.log("Has token in cookie?", Astro.locals.authToken);
 ---
 
 <Layout title="Hello world">
