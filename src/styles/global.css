@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --theme-bg: 0deg 0% 98%;
+    --theme-link: 172deg 18% 41%;
+    --theme-text: 203deg 11% 15%;
+    --theme-quote: 351deg 66% 48%;
+    --theme-accent: 51deg 100% 50%;
+  }
+
+  :root.dark {
+    color-scheme: dark;
+    --theme-bg: 213deg 13% 14%;
+    --theme-text: 220deg 13% 86%;
+    --theme-link: 330deg 49% 67%;
+    --theme-quote: 102deg 100% 86%;
+    --theme-accent: 51deg 100% 50%;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  html body {
+    @apply mx-auto flex min-h-screen flex-col items-center bg-bgColor text-textColor font-mono font-normal antialiased;
+  }
+
+  body {
+    @apply before:content-["_"] before:h-0 before:w-full before:border-t-4 before:border-accent before:animate-hue-rotate;
+  }
+
+  @keyframes hue-rotate {
+    0%,
+    100% {
+      filter: hue-rotate(360deg);
+    }
+    50% {
+      filter: hue-rotate(180deg);
+    }
+  }
+}

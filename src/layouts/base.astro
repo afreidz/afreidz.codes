@@ -1,0 +1,66 @@
+---
+import "@/styles/global.css";
+import "@fontsource/space-mono/400.css";
+import "@fontsource/space-mono/700.css";
+import "@fontsource/space-grotesk/300.css";
+import "@fontsource/space-grotesk/600.css";
+import "@fontsource/space-grotesk/700.css";
+import "@fontsource/space-mono/400-italic.css";
+import "@fontsource/space-mono/700-italic.css";
+
+import { siteConfig } from "@/config";
+import Header from "@/components/header.astro";
+import Footer from "@/components/footer.astro";
+import SkipLink from "@/components/skip.astro";
+import { ViewTransitions } from "astro:transitions";
+
+const {
+  title,
+  socialImage,
+  description = siteConfig.description,
+} = Astro.props;
+
+const metaTitle = `${title} • ${siteConfig.title}`;
+const cannonical = new URL(Astro.url.pathname, Astro.site);
+// const socialImageUrl = new URL(socialImage ?? "/404", Astro.url).href;
+---
+
+<html lang={siteConfig.locale} class="dark">
+  <head>
+    <title>{metaTitle}</title>
+    <link rel="cannonical" href={cannonical} />
+    <link
+      rel="webmention"
+      href="https://webmention.io/www.afreidz.codes/webmention"
+    />
+
+    <meta charset="utf-8" />
+    <meta name="title" content={metaTitle} />
+    <meta name="author" content={siteConfig.author} />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content={description} />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nabla&display=swap"
+      rel="stylesheet"
+    />
+
+    <ViewTransitions fallback="none" />
+  </head>
+  <body>
+    <div class="flex flex-1 flex-col px-6 max-w-3xl">
+      <SkipLink />
+      <Header />
+      <main id="main">
+        <slot />
+      </main>
+    </div>
+    <Footer />
+  </body>
+</html>

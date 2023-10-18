@@ -1,0 +1,18 @@
+---
+import Hero from "@/components/hero.astro";
+import BaseLayout from "@/layouts/base.astro";
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+  post: CollectionEntry<"post">;
+};
+
+const { post } = Astro.props;
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <Hero {post} />
+  <article class="prose prose-sm prose-custom">
+    <slot />
+  </article>
+</BaseLayout>

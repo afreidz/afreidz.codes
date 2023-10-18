@@ -1,0 +1,18 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "lib": ["DOM", "ESNext"],
+    "baseUrl": ".",
+    "paths": {
+      "@/utils/*": ["src/utils/*"],
+      "@/styles/*": ["src/styles/*"],
+      "@/assets/*": ["src/assets/*"],
+      "@/layouts/*": ["src/layouts/*"],
+      "@/content/*": ["src/content/*"],
+      "@/config": ["src/site.config.ts"],
+      "@/components/*": ["src/components/*"]
+    }
+  },
+  "include": ["src", "*.ts"],
+  "exclude": ["node_modules", "**/node_modules/*", ".vscode", "dist"]
+}

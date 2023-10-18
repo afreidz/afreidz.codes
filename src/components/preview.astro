@@ -1,0 +1,31 @@
+---
+import Date from "@/components/date.astro";
+import type { CollectionEntry } from "astro:content";
+import type { HTMLTag, Polymorphic } from "astro/types";
+
+type Props<T extends HTMLTag> = Polymorphic<{ as: T }> & {
+  post: CollectionEntry<"post">;
+  showDesc?: boolean;
+};
+
+const { post, as: Tag = "div", showDesc = false, ...rest } = Astro.props;
+const date = post.data.updatedDate ?? post.data.publishedDate;
+---
+
+<Tag
+  {...rest}
+  class:list={{
+    flex: true,
+    "gap-4": true,
+  }}
+>
+  <Date {date} class="flex-0 w-1/4 opacity-50" />
+  <a
+    rel="prefetch"
+    class="underline"
+    href={`/posts/${post.slug}`}
+    transition:name={`${post.slug}.title`}
+  >
+    {post.data.title}
+  </a>
+</Tag>

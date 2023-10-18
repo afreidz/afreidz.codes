@@ -1,0 +1,21 @@
+---
+import { Icon } from "astro-icon";
+import { siteConfig } from "@/config";
+---
+
+<ul class="flex gap-3 my-4">
+  {
+    siteConfig.socialLinks.map((socialLink) => (
+      <li>
+        <a
+          target="_blank"
+          href={socialLink.link}
+          rel={`noopener noreferrer ${socialLink.webMention ? "me authn" : ""}`}
+        >
+          <Icon name={socialLink.name} class="w-6 aspect-w-1 aspect-h-1" />
+          <span class="sr-only">{socialLink.display}</span>
+        </a>
+      </li>
+    ))
+  }
+</ul>
