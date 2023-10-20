@@ -2,7 +2,7 @@
 title: "I caught mono. A story about monorepos"
 description: "I was asked about my thoughts on using nx/turbo for an upcomming project and I had a relavant experience recently"
 publishedDate: "17 Oct 2023"
-tags: ["monorepo"]
+tags: ["dear-diary", "monorepo"]
 ---
 
 ## Dear Diary
@@ -21,7 +21,7 @@ So I was playing around with a newer component library on a separate react proje
 
 > No self-respecting front-end developer would ever use a 3rd party component library! YARGGHHH!!!!
 
-... yet secretly has a half-dozen repos of self-made public ones that never will see the light of day. But that is a topic for another post. [_\*\* link to future post here \*\*_]()
+... yet secretly has a half-dozen repos of self-made public ones that never will see the light of day. But that is a topic for another post. [_\*\* link to future post here \*\*_](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
 
 This library was part of a monorepo that hosted (rough estimate) 2 dozen packages. I came across a bug that I wanted to file in the GH repo. As a good citizen, I tried to look at the existing issues to make sure it wasn't a dupe.
 

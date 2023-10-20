@@ -16,7 +16,9 @@ import { Image } from "astro:assets";
       class="rounded-full"
       densities={[1, 1.5, 2]}
     />
-    <strong>afreidz.codes</strong>
+    <div>
+      <strong>afreidz</strong><span>.codes</span>
+    </div>
   </a>
   <hr
     class="mt-6 lg:mt-10 border-0 border-b-2 border-dotted border-accent animate-hue-rotate bg-transparent"
@@ -28,6 +30,13 @@ import { Image } from "astro:assets";
     @apply text-3xl lg:text-5xl font-grotesk font-bold text-accent animate-hue-rotate bg-gradient-to-b from-accent to-accent/20 bg-clip-text;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: hsl(var(--theme-accent) / 1);
+    -webkit-text-fill-color: transparent;
+  }
+
+  span {
+    @apply text-3xl lg:text-5xl font-grotesk font-bold text-textColor animate-hue-rotate bg-gradient-to-b from-textColor to-textColor/20 bg-clip-text;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: hsl(var(--theme-textColor) / 1);
     -webkit-text-fill-color: transparent;
   }
 </style>

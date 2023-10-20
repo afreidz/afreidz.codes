@@ -1,0 +1,77 @@
+---
+title: "Add comments to your blog using GitHub discussions"
+description: "A quick, easy, and free way to add comment functionality to your dev blog leveraging github discussions (giscus)"
+publishedDate: "20 Oct 2023"
+tags: ["cool-stuff"]
+draft: true
+---
+
+import Icon from "astro-icon";
+import Sidenote from "@/components/sidenote.astro";
+
+Are you a developer who has a blog that NOBODY sees like me? Do you wish you could add comments without any facy database setup, or custom code? If you long for the day where vibrant discussions, with like-minded individuals, respectfully listening to diverse points of view, _with_ an open-mind, are all happening at the end of your elegant prose? I've got the solution for you!
+
+<h2 class="text-center">
+  <a class="my-30" href="https://giscus.app">
+    giscus
+  </a>
+</h2>
+
+<Icon name="tabler:hand-finger" class="inline-block h-4" /> thats basically the **tl;dr**
+right there. Fill out the form on that app, get the code, profit! You can leave now,
+or read on for more info...
+
+## The Basics of giscus
+
+[giscus](http://giscus.app) is a tool that leverages the [github]("https://github.com") api to create and modify GitHub discussions. Discussions are a feature you can enable at the repository level to engage in the aforementioned exchanges on arbitrary topics seemingly relating to your repository. [giscus](http://giscus.app) ~~abusively~~ cleverly interprets that by creating a discussion for each blog post on your site. If you leverage a static-site builder such as [astro](https://astro.build) _TECHNICALLY_ each discussion relates to a flat markdown file in your `/src/content/posts/` folder. So really, I see very little "out of bounds" with this approach.
+
+After filling out the form, you end up with a script tag you can embed on your blog post template. It looks something like this:
+
+```html
+<script
+  src="https://giscus.app/client.js"
+  data-repo="afreidz/mine-for-bitcoin-malware"
+  data-category="Blog Post Comments"
+  data-category-id="DIC_ZZZZZZZZZZZ"
+  data-theme="transparent_dark"
+  data-repo-id="R_XXXXXXXXX"
+  data-reactions-enabled="1"
+  data-input-position="top"
+  data-mapping="pathname"
+  crossorigin="anonymous"
+  data-emit-metadata="1"
+  data-loading="lazy"
+  data-strict="0"
+  data-lang="en"
+  async
+></script>
+```
+
+This script tag will inject an `iframe` with a UI for interacting with giscus/github. Visitors who want to comment can click the login button, which will login to github, ask to enable the giscus app, and seemlessly redirect back to your blog with the abilit to comment! The UI looks very much like github's own comment mechanism which will be ~~painfully~~ familiar to many devs. And thats all you need for a robust, free, comment section that can be used on your STATIC blog!
+
+<Sidenote>
+  You can use a myriand of [framework
+  components](https://github.com/giscus/giscus-component) instead of the script
+  tag. From what I can tell, under the hood these components wrap a custom
+  WebComponent for each framework. This is an **awesome** approach to
+  cross-~~platform~~ framework development, and something I plan to blog about
+  later. [_\*\* link to future post here
+  \*\*_](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+</Sidenote>
+
+## What I Like About it
+
+GitHub is pretty awesome when it comes to offering free things. Even though this isn't first-party, I feel pretty confident that its not violating any terms or conditions. The app that powers the api calls is hosted on [Vercel](https://vercel.com), which beats out GitHub in terms of giving things away for free. Hopefully the maintainer will keep it alive longer than 6 months before I give up writing blog posts! As always with OSS, I'm sure someone else can fork and deploy (which ironically is my battle-cry at dinner) should the maintainer ghost it.
+
+**Here are some more quick hits:**
+
+- lots of themes, including fully-custom
+  - `transparent_dark` is probably the easiest to use OOTB
+- its GFMD (github flavored markdown) enabled ... so bring on the memes!
+- while you have to enable the app in GH as a commenter, you can also post directly from the discussion in GH without the app
+- you can moderate it through the discussion on GH
+- its a fairly symbiotic relationship to have a developer blog and use GH for comments
+
+## Conclusion
+
+That's all I got, try it on your blog, comment 😉 below, and bring on the shitposts! I mean, all that stuff about open-minded conversations.

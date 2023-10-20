@@ -20,7 +20,7 @@ const { post, headings } = Astro.props;
     <article class="flex-1 break-words">
       <Hero {post} />
       <div
-        class="contents prose prose-sm lg:prose-base prose-custom prose-headings:font-grotesk prose-headings:font-bold prose-headings:text-textColor"
+        class="contents prose prose-sm lg:prose-base prose-code:text-textColor/70 prose-custom prose-headings:font-grotesk prose-headings:font-bold prose-headings:text-textColor"
       >
         <slot />
       </div>
