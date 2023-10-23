@@ -3,7 +3,6 @@ title: "Code Coverage is a Poor Metric"
 description: "Many teams use coverage as a metric of how well tested their code is. This is a single example of why that metric is flawed."
 publishedDate: "23 Oct 2023"
 tags: ["mildly-infuriating", "testing"]
-draft: true
 ---
 
 I often cringe when I hear NFRs call out "_80% code coverage for unit-tests._" What does that even mean? Are we talking lines, funcs, branches? But its an easy thing for dev managers to throw out as a quantitative metric for essentially "making sure you didn't break something." It also is a stupid metric that really doesn't prove out that idea. I'd like to show you a recent example of what leads me to this opinion.
@@ -59,7 +58,7 @@ All files      |     100 |       90 |     100 |     100 |
 
 Now I'll first say that clearly I am still hitting the overall coverage metric I am striving for, but there is 1 uncovered branch that I could not hit, and there is a reason for that. I'm not sure if you picked it up, but here it is:
 
-## This bullshit!
+## The bullshit!
 
 ```js
 // ... stuff
