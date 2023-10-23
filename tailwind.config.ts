@@ -23,6 +23,7 @@ export default {
       fontFamily: {
         ortho: ["Nabla", ...defaultTheme.fontFamily.sans],
         mono: ["Space Mono", ...defaultTheme.fontFamily.mono],
+        code: ["IBM Plex Mono", ...defaultTheme.fontFamily.mono],
         grotesk: ["Space Grotesk", ...defaultTheme.fontFamily.serif],
       },
       colors: {
@@ -63,7 +64,7 @@ export default {
                 "",
             },
             code: {
-              "@apply bg-black/30 px-2 before:hidden after:hidden rounded-sm":
+              "@apply bg-white/5 px-2 before:hidden after:hidden rounded-md !font-code !font-semibold !text-base":
                 "",
             },
           },

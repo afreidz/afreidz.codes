@@ -1,0 +1,84 @@
+---
+title: "Code Coverage is a Poor Metric"
+description: "Many teams use coverage as a metric of how well tested their code is. This is a single example of why that metric is flawed."
+publishedDate: "23 Oct 2023"
+tags: ["mildly-infuriating", "testing"]
+draft: true
+---
+
+I often cringe when I hear NFRs call out "_80% code coverage for unit-tests._" What does that even mean? Are we talking lines, funcs, branches? But its an easy thing for dev managers to throw out as a quantitative metric for essentially "making sure you didn't break something." It also is a stupid metric that really doesn't prove out that idea. I'd like to show you a recent example of what leads me to this opinion.
+
+## The Setup
+
+I have a project that, for reasons well beyond my control, urlencodes a bit of data into a querystring in JSON format. That data is super important to give my entire application a context to work within. So I extract the data from the query string, parse the string from JSON format, and put the resultant data into state. It looks a little something like this:
+
+```js
+useEffect(() => {
+  const qs = new URLSearchParams(window.location.search);
+  if (!qs.has("data")) return;
+
+  const incoming = JSON.parse(qs.get("data") ?? "{}");
+  setId(incoming.id ?? "");
+}, []);
+```
+
+## The Test
+
+As a good teammate, I want to hit the percentage of code coverage threshold so I write a unit-test to hit this block of code. I make sure to pump in some data to the query string and set the current location before the test runs. It looks ... thusly:
+
+```js
+describe("good data", () => {
+  beforeAll(() => {
+    const loc = new URL(window.location.origin);
+    const data = JSON.stringify({
+      id: "foo",
+    });
+
+    loc.searchParams.set("data", data);
+    window.location.href = loc.href;
+  });
+
+  it("sets the id", () => {
+    // ...other stuff
+    expect(result.current.id).toBe("foo");
+  });
+});
+```
+
+I then covered the edge cases. What if there is mal-formed data? covered. What if there is no data? Also covered. But what do the coverage metrics say?
+
+```
+ % Coverage report from v8
+---------------|---------|----------|---------|---------|-------------------
+File           | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+---------------|---------|----------|---------|---------|-------------------
+All files      |     100 |       90 |     100 |     100 |
+ somefile.tsx  |     100 |       90 |     100 |     100 | 28
+---------------|---------|----------|---------|---------|-------------------
+```
+
+Now I'll first say that clearly I am still hitting the overall coverage metric I am striving for, but there is 1 uncovered branch that I could not hit, and there is a reason for that. I'm not sure if you picked it up, but here it is:
+
+## This bullshit!
+
+```js
+// ... stuff
+if (!qs.has("data")) return;
+
+const incoming = JSON.parse(qs.get("data") ?? "{}");
+// ... other stuff
+```
+
+Specifically the `?? "{}"`. JSON.parse is expecting a string and nothing but a string. The `.get` method of a `URLSearchParams` will return a string **OR** `null`. So I have to protect against that with the `?? "{}"`. You'll notice, however, that I short-circuit the entire block if `qs.has("data")` returns `false`.
+
+I'm not sure where the blame lies, typescript most likely, but I will never be able to cover that line because its not valid scenario given the short-circuit. Yet typescript won't narrow to `string` thus the safety valve of the nullish coelecence. And uncovered line by extension.
+
+## Thus, I conclude:
+
+<h2 class="flex justify-center">
+  <span class="my-30">THIS IS STUPID.</span>
+</h2>
+
+This is a single example of why coverage metrics are stupid. Every outcome of my code block is tested. Yet there is an unreachable branch by typescript+unit-test standards that is docking my coverage metrics.
+
+If you can think of a way to reach this block in a test, or better better handle this scenario, let me know in the comments. I am sure there is something I am not thinking of.

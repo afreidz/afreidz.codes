@@ -11,5 +11,13 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [calculateReadingTime],
   },
-  integrations: [tailwind(), svelte(), mdx(), prefetch()],
+  integrations: [
+    tailwind(),
+    svelte(),
+    mdx({
+      syntaxHighlight: "shiki",
+      shikiConfig: { theme: "github-dark" },
+    }),
+    prefetch(),
+  ],
 });

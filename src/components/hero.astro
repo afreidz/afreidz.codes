@@ -27,13 +27,13 @@ const { remarkPluginFrontmatter: frontmatter } = await post.render();
 {
   post.data.tags.length && (
     <div class="flex gap-3 mt-3 mb-10 items-center">
-      <Icon name="tabler:tags" class="w-6" />
-      <ul class="flex-gap-3 items-center">
+      <Icon name="tabler:tags" class="w-6 flex-none" />
+      <ul class="flex items-center">
         {post.data.tags.map((tag, i) => (
-          <li>
+          <li class="flex">
             <a
               href={`/tags/${tag}/`}
-              class="inline-block link-dotted before:content-['#_']"
+              class="inline-block link-dotted before:content-['#']"
               aria-label={`View more blogs with the tag ${tag}`}
             >
               {tag}
