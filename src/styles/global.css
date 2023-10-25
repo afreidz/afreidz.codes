@@ -22,4 +22,8 @@
       --theme-600: 230deg 81% 60%;
     }
   }
+
+  #main {
+    @apply mx-4 lg:mx-16;
+  }
 }

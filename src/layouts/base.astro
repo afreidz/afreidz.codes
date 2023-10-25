@@ -13,6 +13,7 @@ import SkipLink from "@/components/skip.astro";
 import { ViewTransitions } from "astro:transitions";
 
 const {
+  back,
   title,
   socialImage,
   description = siteConfig.description,
@@ -48,7 +49,6 @@ const cannonical = new URL(Astro.url.pathname, Astro.site);
   </head>
   <body
     class=`
-    px-6
     flex
     flex-1
     mx-auto
@@ -67,7 +67,7 @@ const cannonical = new URL(Astro.url.pathname, Astro.site);
   `
   >
     <SkipLink />
-    <Header />
+    <Header {back} />
     <slot />
     <Footer />
   </body>

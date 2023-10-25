@@ -72,9 +72,9 @@ const incoming = JSON.parse(qs.get("data") ?? "{}");
 // ... other stuff
 ```
 
-Specifically the `?? "{}"`. JSON.parse is expecting a string and nothing but a string. The `.get` method of a `URLSearchParams` will return a string **OR** `null`. So I have to protect against that with the `?? "{}"`. You'll notice, however, that I short-circuit the entire block if `qs.has("data")` returns `false`.
+Specifically the `?? "{}"` in JSON.parse, which is expecting a string and nothing but a string. The `.get` method of a `URLSearchParams` will return a string **OR** `null`. So I have to protect against that with the `?? "{}"`. You'll notice, however, that I short-circuit the entire block if `qs.has("data")` returns `false`.
 
-I'm not sure where the blame lies, typescript most likely, but I will never be able to cover that line because its not valid scenario given the short-circuit. Yet typescript won't narrow to `string` thus the safety valve of the nullish coelecence. And uncovered line by extension.
+I'm not sure where the blame lies, typescript most likely, but I will never be able to cover that line because its not valid scenario given the short-circuit. Yet typescript won't narrow to `string` thus the safety valve of the nullish coelecence, and an uncovered line by extension.
 
 ## Thus, I conclude:
 
