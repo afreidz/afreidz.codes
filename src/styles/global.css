@@ -26,7 +26,7 @@
   }
 
   html body {
-    @apply mx-auto flex min-h-screen flex-col items-center bg-bgColor text-textColor font-mono font-normal antialiased;
+    @apply mx-auto flex min-h-screen flex-col items-center bg-bgColor text-textColor font-normal antialiased text-lg;
   }
 
   @keyframes hue-rotate {

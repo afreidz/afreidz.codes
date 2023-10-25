@@ -1,0 +1,14 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type ValidTags = "a" | "span";
+type Props<T extends ValidTags> = HTMLAttributes<T> & {
+  as: ValidTags;
+};
+
+const { as: Tag = "span", ...rest } = Astro.props;
+---
+
+<div class="my-14 text-center text-2xl w-full font-grotesk">
+  <Tag {...rest}><slot /></Tag>
+</div>

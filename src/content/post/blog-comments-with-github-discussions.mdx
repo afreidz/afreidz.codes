@@ -6,15 +6,14 @@ tags: ["cool-stuff"]
 ---
 
 import Icon from "astro-icon";
+import TLDR from "@/components/tldr.astro";
 import Sidenote from "@/components/sidenote.astro";
 
 Are you a developer who has a blog that NOBODY sees like me? Do you wish you could add comments without any facy database setup, or custom code? If you long for the day where vibrant discussions, with like-minded individuals, respectfully listening to diverse points of view, _with_ an open-mind, are all happening at the end of your elegant prose? I've got the solution for you!
 
-<h2 class="text-center">
-  <a class="my-30" href="https://giscus.app">
-    giscus
-  </a>
-</h2>
+<TLDR as="a" href="https://giscus.app">
+  {"giscus"}
+</TLDR>
 
 <Icon name="tabler:hand-finger" class="inline-block h-4" /> thats basically the **tl;dr**
 right there. Fill out the form on that app, get the code, profit! You can leave now,

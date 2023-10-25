@@ -12,36 +12,38 @@ const { post } = Astro.props;
 const { remarkPluginFrontmatter: frontmatter } = await post.render();
 ---
 
-<Heading
-  as="h1"
-  type="title"
-  class="mb-3"
-  transition:name={`${post.slug}.title`}
->
-  {post.data.title}
-</Heading>
-<p class="font-semibold" class:list={{ "mb-10": !post.data.tags.length }}>
-  <Date date={post.data.publishedDate} /> /{" "}
-  {frontmatter.minutesRead}
-</p>
-{
-  post.data.tags.length && (
-    <div class="flex gap-3 mt-3 mb-10 items-center">
-      <Icon name="tabler:tags" class="w-6 flex-none" />
-      <ul class="flex items-center">
-        {post.data.tags.map((tag, i) => (
-          <li class="flex">
-            <a
-              href={`/tags/${tag}/`}
-              class="inline-block link-dotted before:content-['#']"
-              aria-label={`View more blogs with the tag ${tag}`}
-            >
-              {tag}
-            </a>
-            {i < post.data.tags.length - 1 && ", "}
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
-}
+<div class="not-prose">
+  <Heading
+    as="h1"
+    type="title"
+    class="mb-3"
+    transition:name={`${post.slug}.title`}
+  >
+    {post.data.title}
+  </Heading>
+  <p class="font-semibold" class:list={{ "mb-10": !post.data.tags.length }}>
+    <Date date={post.data.publishedDate} /> /{" "}
+    {frontmatter.minutesRead}
+  </p>
+  {
+    post.data.tags.length && (
+      <div class="flex gap-3 mt-3 mb-10 items-center font-grotesk">
+        <Icon name="tabler:tags" class="w-6 flex-none" />
+        <ul class="flex items-center">
+          {post.data.tags.map((tag, i) => (
+            <li class="flex">
+              <a
+                href={`/tags/${tag}/`}
+                class="inline-block link-dotted before:content-['#']"
+                aria-label={`View more blogs with the tag ${tag}`}
+              >
+                {tag}
+              </a>
+              {i < post.data.tags.length - 1 && ", "}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+</div>

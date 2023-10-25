@@ -5,6 +5,8 @@ publishedDate: "23 Oct 2023"
 tags: ["mildly-infuriating", "testing"]
 ---
 
+import TLDR from "@/components/tldr.astro";
+
 I often cringe when I hear NFRs call out "_80% code coverage for unit-tests._" What does that even mean? Are we talking lines, funcs, branches? But its an easy thing for dev managers to throw out as a quantitative metric for essentially "making sure you didn't break something." It also is a stupid metric that really doesn't prove out that idea. I'd like to show you a recent example of what leads me to this opinion.
 
 ## The Setup
@@ -74,9 +76,7 @@ I'm not sure where the blame lies, typescript most likely, but I will never be a
 
 ## Thus, I conclude:
 
-<h2 class="flex justify-center">
-  <span class="my-30">THIS IS STUPID.</span>
-</h2>
+<TLDR class="font-bold">THIS IS STUPID.</TLDR>
 
 This is a single example of why coverage metrics are stupid. Every outcome of my code block is tested. Yet there is an unreachable branch by typescript+unit-test standards that is docking my coverage metrics.
 

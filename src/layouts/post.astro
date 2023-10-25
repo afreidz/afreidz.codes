@@ -15,15 +15,13 @@ const { post, headings } = Astro.props;
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <div class="flex gap-6 relative">
+  <article class="flex-1 lg:flex">
     {!!headings.length && <TOC {headings} />}
-    <article class="flex-1 break-words">
+    <div
+      class="prose contents lg:block lg:prose-lg prose-code:text-textColor/70 prose-custom prose-headings:font-grotesk prose-headings:font-bold prose-headings:text-textColor"
+    >
       <Hero {post} />
-      <div
-        class="contents prose prose-sm lg:prose-base prose-code:text-textColor/70 prose-custom prose-headings:font-grotesk prose-headings:font-bold prose-headings:text-textColor"
-      >
-        <slot />
-      </div>
+      <slot />
       <div class="my-10">
         <Giscus
           categoryId="DIC_kwDOKiA5os4CaPdb"
@@ -41,6 +39,6 @@ const { post, headings } = Astro.props;
           lang="en"
         />
       </div>
-    </article>
-  </div>
+    </div>
+  </article>
 </BaseLayout>
