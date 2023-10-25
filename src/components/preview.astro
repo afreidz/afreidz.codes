@@ -17,15 +17,14 @@ const date = post.data.updatedDate ?? post.data.publishedDate;
   class:list={{
     flex: true,
     "gap-4": true,
-    "font-grotesk": true,
     "items-center": true,
   }}
 >
-  <Date {date} class="flex-0 shrink-0 w-2/5 lg:w-1/4 opacity-50 text-sm" />
+  <Date {date} class="flex-0 shrink-0 w-22 lg:w-1/4 opacity-50 text-sm" />
   <a
     rel="prefetch"
     href={`/posts/${post.slug}`}
-    class="underline font-semibold"
+    class="link-dotted font-semibold"
     transition:name={`${post.slug}.title`}
   >
     {post.data.title}

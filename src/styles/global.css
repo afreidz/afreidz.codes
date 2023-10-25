@@ -3,39 +3,23 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    color-scheme: light;
-    --theme-bg: 0deg 0% 98%;
-    --theme-link: 172deg 18% 41%;
-    --theme-text: 203deg 11% 15%;
-    --theme-quote: 351deg 66% 48%;
-    --theme-accent: 51deg 100% 50%;
-  }
-
-  :root.dark {
-    color-scheme: dark;
-    --theme-bg: 213deg 13% 14%;
-    --theme-text: 220deg 13% 86%;
-    --theme-link: 330deg 49% 67%;
-    --theme-quote: 102deg 100% 86%;
-    --theme-accent: 51deg 100% 50%;
-  }
-
-  html {
-    @apply scroll-smooth;
-  }
-
-  html body {
-    @apply mx-auto flex min-h-screen flex-col items-center bg-bgColor text-textColor font-normal antialiased text-lg;
-  }
-
-  @keyframes hue-rotate {
-    0%,
-    100% {
-      filter: hue-rotate(360deg);
+  @media (prefers-color-scheme: light) {
+    :root {
+      color-scheme: light;
+      --theme-900: 210deg 13% 86%;
+      --theme-100: 229deg 63% 5%;
+      --theme-500: 310deg 81% 60%;
+      --theme-600: 260deg 81% 60%;
     }
-    50% {
-      filter: hue-rotate(180deg);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --theme-900: 229deg 63% 5%;
+      --theme-100: 210deg 13% 86%;
+      --theme-500: 320deg 81% 60%;
+      --theme-600: 230deg 81% 60%;
     }
   }
 }

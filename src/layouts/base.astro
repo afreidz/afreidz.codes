@@ -1,22 +1,10 @@
 ---
 import "@/styles/global.css";
-import "@fontsource/space-grotesk/300.css";
-import "@fontsource/space-grotesk/600.css";
-import "@fontsource/space-grotesk/700.css";
 
 import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/600.css";
 import "@fontsource/ibm-plex-mono/400-italic.css";
 import "@fontsource/ibm-plex-mono/600-italic.css";
-
-import "@fontsource/nunito/200.css";
-import "@fontsource/nunito/400.css";
-import "@fontsource/nunito/600.css";
-import "@fontsource/nunito/700.css";
-import "@fontsource/nunito/200-italic.css";
-import "@fontsource/nunito/400-italic.css";
-import "@fontsource/nunito/600-italic.css";
-import "@fontsource/nunito/700-italic.css";
 
 import { siteConfig } from "@/config";
 import Header from "@/components/header.astro";
@@ -35,7 +23,7 @@ const cannonical = new URL(Astro.url.pathname, Astro.site);
 // const socialImageUrl = new URL(socialImage ?? "/404", Astro.url).href;
 ---
 
-<html lang={siteConfig.locale} class="dark">
+<html lang={siteConfig.locale}>
   <head>
     <title>{metaTitle}</title>
     <link rel="cannonical" href={cannonical} />
@@ -43,6 +31,8 @@ const cannonical = new URL(Astro.url.pathname, Astro.site);
       rel="webmention"
       href="https://webmention.io/www.afreidz.codes/webmention"
     />
+
+    <link rel="icon" type="image/png" href="/icon.png" />
 
     <meta charset="utf-8" />
     <meta name="title" content={metaTitle} />
@@ -56,12 +46,29 @@ const cannonical = new URL(Astro.url.pathname, Astro.site);
 
     <ViewTransitions fallback="none" />
   </head>
-  <body class="flex flex-1 flex-col px-6 max-w-4xl items-stretch">
+  <body
+    class=`
+    px-6
+    flex
+    flex-1
+    mx-auto
+    text-lg
+    flex-col
+    max-w-5xl
+    bg-neutral
+    font-normal
+    antialiased
+    min-h-screen
+    smooth-scroll
+    items-stretch
+    tracking-tight
+    bg-transparent
+    text-textColor
+  `
+  >
     <SkipLink />
     <Header />
-    <main id="main" class="contents">
-      <slot />
-    </main>
+    <slot />
     <Footer />
   </body>
 </html>

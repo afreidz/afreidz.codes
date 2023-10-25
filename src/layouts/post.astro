@@ -15,10 +15,10 @@ const { post, headings } = Astro.props;
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <article class="flex-1 lg:flex">
+  <main id="main" class="flex-1 lg:flex">
     {!!headings.length && <TOC {headings} />}
-    <div
-      class="prose contents lg:block lg:prose-lg prose-code:text-textColor/70 prose-custom prose-headings:font-grotesk prose-headings:font-bold prose-headings:text-textColor"
+    <article
+      class="prose contents lg:block lg:prose-lg prose-custom prose-headings:tracking-tighter prose-headings:font-bold prose-headings:text-default"
     >
       <Hero {post} />
       <slot />
@@ -39,6 +39,6 @@ const { post, headings } = Astro.props;
           lang="en"
         />
       </div>
-    </div>
-  </article>
+    </article>
+  </main>
 </BaseLayout>

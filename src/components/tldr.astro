@@ -9,6 +9,6 @@ type Props<T extends ValidTags> = HTMLAttributes<T> & {
 const { as: Tag = "span", ...rest } = Astro.props;
 ---
 
-<div class="my-14 text-center text-2xl w-full font-grotesk">
+<div class="my-14 text-center text-2xl w-full">
   <Tag {...rest}><slot /></Tag>
 </div>

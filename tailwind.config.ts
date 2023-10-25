@@ -7,7 +7,6 @@ import containerQuery from "@tailwindcss/container-queries";
 
 export default {
   content: ["./src/**/*.{astro,html,js,md,svelte,ts}"],
-  darkMode: "class",
   corePlugins: {
     aspectRatio: false,
     touchAction: false,
@@ -21,36 +20,51 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Nunito", ...defaultTheme.fontFamily.sans],
+        sans: [
+          "ui-sans-serif",
+          "system-ui",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI,Roboto",
+          "Helvetica Neue",
+          "Arial",
+          "Noto Sans",
+          "sans-serif",
+          "Apple Color Emoji",
+          "Segoe UI Emoji",
+          "Segoe UI Symbol",
+          "Noto Color Emoji",
+        ],
         mono: ["IBM Plex Mono", ...defaultTheme.fontFamily.mono],
-        grotesk: ["Space Grotesk", ...defaultTheme.fontFamily.serif],
       },
       colors: {
-        link: "hsl(var(--theme-link) / <alpha-value>)",
-        bgColor: "hsl(var(--theme-bg) / <alpha-value>)",
-        quote: "hsl(var(--theme-quote) / <alpha-value>)",
-        textColor: "hsl(var(--theme-text) / <alpha-value>)",
-        accent: "hsl(var(--theme-accent) / <alpha-value>)",
+        default: "hsl(var(--theme-100) / <alpha-value>)",
+        accent: "hsl(var(--theme-500) / <alpha-value>)",
+        neutral: "hsl(var(--theme-900) / <alpha-value>)",
+        "accent-rotated": "hsl(var(--theme-600) / <alpha-value>)",
       },
       keyframes: {
         "hue-rotate": {
-          "0%, 100%": { filter: "hue-rotate(360deg)" },
-          "50%": { filter: "hue-rotate(180deg)" },
+          "0%, 100%": { filter: "hue-rotate(0deg)" },
+          "50%": { filter: "hue-rotate(-30deg)" },
         },
+      },
+      animation: {
+        "hue-rotate": `hue-rotate 10s infinite`,
       },
       typography: (theme: (i: string) => void) => ({
         custom: {
           css: {
-            "--tw-prose-body": theme("colors.textColor / 1"),
+            "--tw-prose-body": theme("colors.default / 1"),
             "--tw-prose-headings": theme("colors.accent / 1"),
-            "--tw-prose-links": theme("colors.textColor / 1"),
-            "--tw-prose-bold": theme("colors.textColor / 1"),
-            "--tw-prose-bullets": theme("colors.textColor / 1"),
-            "--tw-prose-quotes": theme("colors.textColor / 1"),
-            "--tw-prose-code": theme("colors.textColor / 1"),
+            "--tw-prose-links": theme("colors.accent / 1"),
+            "--tw-prose-bold": theme("colors.default / 1"),
+            "--tw-prose-bullets": theme("colors.default / 1"),
+            "--tw-prose-quotes": theme("colors.default / 1"),
+            "--tw-prose-code": theme("colors.default / 1"),
             "--tw-prose-quote-borders": theme("colors.accent / 1"),
-            "--tw-prose-hr": `0.5px dashed ${theme("colors.textColor / 0.5")}`,
-            "--tw-prose-th-borders": theme("colors.textColor / 0.5"),
+            "--tw-prose-hr": `0.5px dashed ${theme("colors.default / 0.5")}`,
+            "--tw-prose-th-borders": theme("colors.default / 0.5"),
           },
         },
         DEFAULT: {
@@ -59,15 +73,18 @@ export default {
               "@apply link-dotted": "",
             },
             blockquote: {
-              "@apply animate-hue-rotate font-grotesk not-italic font-semibold mx-6":
+              "@apply not-italic font-semibold mx-6 bg-default/5 py-1": "",
+            },
+            pre: {
+              "@apply dark:!bg-default/5 tracking-normal flex flex-row-reverse":
                 "",
             },
-            // pre: {
-            //   "@apply whitespace-pre-wrap": "",
-            // },
             code: {
-              "@apply bg-white/5 px-2 before:hidden after:hidden rounded-md !font-mono !font-semibold text-sm lg:!text-base overflow-auto":
+              "@apply px-2 flex-1 inline-block dark:bg-default/5 text-white rounded-md !font-mono !font-semibold text-sm lg:!text-base":
                 "",
+            },
+            hr: {
+              "@apply border-0 border-b-2 border-dotted border-default/10": "",
             },
           },
         },
@@ -80,13 +97,8 @@ export default {
     containerQuery,
     plugin(({ addComponents }) => {
       addComponents({
-        ".animate-hue-rotate": {
-          animation: "hue-rotate",
-          "animation-duration": "60s",
-          "animation-iteration-count": "infinite",
-        },
         ".link": {
-          "@apply transition-colors text-accent ease-in inline-block px-1 font-semibold animate-hue-rotate decoration-accent hover:bg-accent hover:no-underline hover:text-bgColor":
+          "@apply transition-colors text-accent-rotated ease-in inline-block px-1 font-semibold decoration-accent-rotated hover:bg-accent-rotated hover:no-underline hover:text-neutral":
             "",
         },
         ".link-wavy": {
@@ -106,6 +118,10 @@ export default {
           "text-underline-offset": "0.4em",
           "text-decoration-style": "solid",
           "text-decoration-line": "underline",
+        },
+        ".gradient-text": {
+          "@apply bg-gradient-to-b from-accent to-accent-rotated text-transparent bg-clip-text":
+            "",
         },
       });
     }),
