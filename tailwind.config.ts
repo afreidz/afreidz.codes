@@ -38,10 +38,10 @@ export default {
         mono: ["IBM Plex Mono", ...defaultTheme.fontFamily.mono],
       },
       colors: {
-        default: "hsl(var(--theme-100) / <alpha-value>)",
-        accent: "hsl(var(--theme-500) / <alpha-value>)",
-        neutral: "hsl(var(--theme-900) / <alpha-value>)",
-        "accent-rotated": "hsl(var(--theme-600) / <alpha-value>)",
+        default: "hsl(var(--theme-default) / <alpha-value>)",
+        accent: "hsl(var(--theme-accent) / <alpha-value>)",
+        neutral: "hsl(var(--theme-neutral) / <alpha-value>)",
+        "accent-rotated": "hsl(var(--theme-accent-rotate) / <alpha-value>)",
       },
       keyframes: {
         "hue-rotate": {
