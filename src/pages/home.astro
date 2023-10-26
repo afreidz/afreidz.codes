@@ -1,0 +1,31 @@
+---
+import Layout from "@/layouts/base.astro";
+import Heading from "@/components/heading.astro";
+import Preview from "@/components/preview.astro";
+import Socials from "@/components/socials.astro";
+import { getAllPosts, sort } from "@/utils/data";
+
+const MAX = 10;
+const allPosts = await getAllPosts();
+const recents = sort.date(allPosts).slice(0, MAX);
+---
+
+<Layout title="Hello world">
+  <main id="main">
+    <section class="lg:w-3/4">
+      <Heading type="title" as="h1" class="w-max">Hello World!</Heading>
+      <p class="leading-relaxed">
+        Hi there! My name is Andy Freidenfelds and this is the diary of a web
+        developer ... a personal blog and my little corner of the internet. If
+        you want to know more about me, find me on the links below...
+      </p>
+      <Socials />
+    </section>
+    <section class="lg:w-3/4">
+      <Heading>Recent Posts</Heading>
+      <ul class="flex flex-col gap-3">
+        {recents.map((post) => <Preview as="li" {post} />)}
+      </ul>
+    </section>
+  </main>
+</Layout>

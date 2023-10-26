@@ -16,15 +16,25 @@ const {
   back,
   title,
   socialImage,
+  splash = false,
   description = siteConfig.description,
 } = Astro.props;
 
-const metaTitle = `${title} • ${siteConfig.title}`;
 const cannonical = new URL(Astro.url.pathname, Astro.site);
+const metaTitle = !title ? siteConfig.title : `${title} • ${siteConfig.title}`;
 // const socialImageUrl = new URL(socialImage ?? "/404", Astro.url).href;
 ---
 
-<html lang={siteConfig.locale}>
+<html
+  lang={siteConfig.locale}
+  class:list={{
+    "bg-neutral-100": true,
+    "bg-gradient-to-b": true,
+    "from-transparent": true,
+    "via-transparent": true,
+    "to-accent-100/5": true,
+  }}
+>
   <head>
     <title>{metaTitle}</title>
     <link rel="cannonical" href={cannonical} />
@@ -61,13 +71,14 @@ const cannonical = new URL(Astro.url.pathname, Astro.site);
     min-h-screen
     smooth-scroll
     items-stretch
-    bg-neutral-100
     tracking-tight
+    selection:bg-accent-300/60
   `
   >
+    {splash && <div class="absolute inset-0 bg-grid" />}
+    {!splash && <Header {back} />}
     <SkipLink />
-    <Header {back} />
     <slot />
-    <Footer />
+    {!splash && <Footer />}
   </body>
 </html>

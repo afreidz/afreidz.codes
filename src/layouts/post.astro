@@ -17,7 +17,7 @@ const { post, headings } = Astro.props;
 <BaseLayout
   title={post.data.title}
   description={post.data.description}
-  back="/"
+  back="/home"
 >
   <main id="main" class="flex-1 lg:flex">
     {!!headings.length && <TOC {headings} />}

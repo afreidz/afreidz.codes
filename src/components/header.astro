@@ -21,6 +21,7 @@ const { back } = Astro.props;
       src={me}
       width="45"
       height="45"
+      transition:name="me"
       alt="an image of me"
       class="rounded-full"
       densities={[1, 1.5, 2]}
@@ -28,7 +29,7 @@ const { back } = Astro.props;
     <div
       class="text-4xl lg:text-5xl font-bold tracking-tighter leading-none drop-shadow-md"
     >
-      <span class="text-gradient-200">afreidz</span><span
+      <span class="text-gradient-300">afreidz</span><span
         class="text-gradient-100">.codes</span
       >
     </div>
@@ -36,7 +37,10 @@ const { back } = Astro.props;
   {
     back && (
       <a href={back}>
-        <Icon name="ic:baseline-arrow-back" class="text-default-100/40 h-8" />
+        <Icon
+          name="ic:baseline-arrow-back"
+          class="transition-all text-default-100/40 h-8 hover:text-accent-100"
+        />
       </a>
     )
   }

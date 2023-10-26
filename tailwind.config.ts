@@ -38,8 +38,9 @@ export default {
         mono: ["IBM Plex Mono", ...defaultTheme.fontFamily.mono],
       },
       colors: ({ colors }) => ({
-        "accent-100": colors.rose[400],
-        "accent-200": colors.indigo[400],
+        "accent-100": colors.indigo[500],
+        "accent-200": colors.rose[500],
+        "accent-300": colors.amber[500],
         "default-100": "hsl(var(--theme-default-100) / <alpha-value>)",
         "default-200": "hsl(var(--theme-default-200) / <alpha-value>)",
         "neutral-100": "hsl(var(--theme-neutral-100) / <alpha-value>)",
@@ -50,9 +51,14 @@ export default {
           "0%, 100%": { filter: "hue-rotate(0deg)" },
           "50%": { filter: "hue-rotate(-30deg)" },
         },
+        pulse: {
+          "0%, 100%": { opacity: "0.3", tranform: "rotate(360deg)" },
+          "50%": { opacity: "0.6", transform: "rotate(180deg)" },
+        },
       },
       animation: {
         "hue-rotate": `hue-rotate 10s infinite`,
+        pulse: "pulse 5s linear infinite",
       },
       typography: (theme: (i: string) => void) => ({
         custom: {
@@ -103,7 +109,7 @@ export default {
     plugin(({ addComponents }) => {
       addComponents({
         ".link": {
-          "@apply transition-colors text-accent-200 ease-in inline-block px-1 font-semibold decoration-accent-200 hover:bg-accent-200 hover:no-underline hover:text-neutral-100":
+          "@apply transition-colors rounded-sm text-accent-100 ease-in inline-block px-1 font-semibold decoration-accent-100 hover:bg-accent-100 hover:no-underline hover:text-neutral-100":
             "",
         },
         ".link-wavy": {
@@ -131,6 +137,18 @@ export default {
         ".text-gradient-200": {
           "@apply bg-cover bg-gradient-to-r from-accent-100 to-accent-200 text-transparent bg-clip-text":
             "",
+        },
+        ".text-gradient-300": {
+          "@apply bg-cover bg-gradient-to-r from-accent-100 via-accent-200 to-accent-300 text-transparent bg-clip-text":
+            "",
+        },
+        ".bg-grid": {
+          "background-position": "-9px",
+          "background-size": "100px 100px",
+          "background-image": "url('/grid.png')",
+          "-webkit-mask-image":
+            "linear-gradient(0deg, transparent 70%, rgba(255,255,255,0.8))",
+          "mask-image": "linear-gradient(to bottom, white, 5%, transparent)",
         },
       });
     }),
