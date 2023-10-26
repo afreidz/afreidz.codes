@@ -22,7 +22,7 @@ const { post, headings } = Astro.props;
   <main id="main" class="flex-1 lg:flex">
     {!!headings.length && <TOC {headings} />}
     <article
-      class="prose contents lg:block lg:prose-lg prose-custom prose-headings:tracking-tighter prose-headings:font-bold prose-headings:text-default"
+      class="prose contents lg:block lg:prose-lg prose-custom prose-headings:tracking-tighter prose-headings:font-bold prose-headings:text-gradient-100"
     >
       <Hero {post} />
       <slot />

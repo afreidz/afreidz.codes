@@ -37,12 +37,14 @@ export default {
         ],
         mono: ["IBM Plex Mono", ...defaultTheme.fontFamily.mono],
       },
-      colors: {
-        default: "hsl(var(--theme-default) / <alpha-value>)",
-        accent: "hsl(var(--theme-accent) / <alpha-value>)",
-        neutral: "hsl(var(--theme-neutral) / <alpha-value>)",
-        "accent-rotated": "hsl(var(--theme-accent-rotate) / <alpha-value>)",
-      },
+      colors: ({ colors }) => ({
+        "accent-100": colors.rose[400],
+        "accent-200": colors.indigo[400],
+        "default-100": "hsl(var(--theme-default-100) / <alpha-value>)",
+        "default-200": "hsl(var(--theme-default-200) / <alpha-value>)",
+        "neutral-100": "hsl(var(--theme-neutral-100) / <alpha-value>)",
+        "neutral-200": "hsl(var(--theme-neutral-200) / <alpha-value>)",
+      }),
       keyframes: {
         "hue-rotate": {
           "0%, 100%": { filter: "hue-rotate(0deg)" },
@@ -55,16 +57,18 @@ export default {
       typography: (theme: (i: string) => void) => ({
         custom: {
           css: {
-            "--tw-prose-body": theme("colors.default / 1"),
-            "--tw-prose-headings": theme("colors.accent / 1"),
-            "--tw-prose-links": theme("colors.accent / 1"),
-            "--tw-prose-bold": theme("colors.default / 1"),
-            "--tw-prose-bullets": theme("colors.default / 1"),
-            "--tw-prose-quotes": theme("colors.default / 1"),
-            "--tw-prose-code": theme("colors.default / 1"),
-            "--tw-prose-quote-borders": theme("colors.accent / 1"),
-            "--tw-prose-hr": `0.5px dashed ${theme("colors.default / 0.5")}`,
-            "--tw-prose-th-borders": theme("colors.default / 0.5"),
+            "--tw-prose-body": theme("colors.default-100 / 1"),
+            "--tw-prose-headings": theme("colors.accent-100 / 1"),
+            "--tw-prose-links": theme("colors.accent-100 / 1"),
+            "--tw-prose-bold": theme("colors.default-100 / 1"),
+            "--tw-prose-bullets": theme("colors.default-100 / 1"),
+            "--tw-prose-quotes": theme("colors.default-100 / 1"),
+            "--tw-prose-code": theme("colors.default-100 / 1"),
+            "--tw-prose-quote-borders": theme("colors.accent-100 / 1"),
+            "--tw-prose-hr": `0.5px dashed ${theme(
+              "colors.default-100 / 0.5",
+            )}`,
+            "--tw-prose-th-borders": theme("colors.default-100 / 0.5"),
           },
         },
         DEFAULT: {
@@ -73,18 +77,19 @@ export default {
               "@apply link-dotted": "",
             },
             blockquote: {
-              "@apply not-italic font-semibold mx-6 bg-default/5 py-1": "",
+              "@apply not-italic font-semibold mx-6 bg-default-100/5 py-1": "",
             },
             pre: {
-              "@apply dark:!bg-default/5 tracking-normal flex flex-row-reverse":
+              "@apply dark:!bg-default-100/5 tracking-normal flex flex-row-reverse":
                 "",
             },
             code: {
-              "@apply px-2 flex-1 inline-block dark:bg-default/5 text-white rounded-md !font-mono !font-semibold text-sm lg:!text-base":
+              "@apply px-2 flex-1 inline-block dark:bg-default-100/5 text-default-100 rounded-md !font-mono !font-semibold text-sm lg:!text-base":
                 "",
             },
             hr: {
-              "@apply border-0 border-b-2 border-dotted border-default/10": "",
+              "@apply border-0 border-b-2 border-dotted border-default-100/10":
+                "",
             },
           },
         },
@@ -98,7 +103,7 @@ export default {
     plugin(({ addComponents }) => {
       addComponents({
         ".link": {
-          "@apply transition-colors text-accent-rotated ease-in inline-block px-1 font-semibold decoration-accent-rotated hover:bg-accent-rotated hover:no-underline hover:text-neutral":
+          "@apply transition-colors text-accent-200 ease-in inline-block px-1 font-semibold decoration-accent-200 hover:bg-accent-200 hover:no-underline hover:text-neutral-100":
             "",
         },
         ".link-wavy": {
@@ -119,8 +124,12 @@ export default {
           "text-decoration-style": "solid",
           "text-decoration-line": "underline",
         },
-        ".gradient-text": {
-          "@apply bg-gradient-to-b from-accent to-accent-rotated text-transparent bg-clip-text":
+        ".text-gradient-100": {
+          "@apply bg-cover bg-gradient-to-b from-default-100 to-default-200 text-transparent bg-clip-text":
+            "",
+        },
+        ".text-gradient-200": {
+          "@apply bg-cover bg-gradient-to-r from-accent-100 to-accent-200 text-transparent bg-clip-text":
             "",
         },
       });

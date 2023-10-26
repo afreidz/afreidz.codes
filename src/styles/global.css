@@ -6,20 +6,20 @@
   @media (prefers-color-scheme: light) {
     :root {
       color-scheme: light;
-      --theme-neutral: 210deg 13% 86%;
-      --theme-default: 229deg 63% 5%;
-      --theme-accent: 310deg 81% 60%;
-      --theme-accent-rotate: 260deg 81% 60%;
+      --theme-neutral-100: 210deg 40% 96%;
+      --theme-neutral-200: 213deg 27% 84%;
+      --theme-default-100: 229deg 63% 5%;
+      --theme-default-200: 229deg 63% 5%;
     }
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
       color-scheme: dark;
-      --theme-neutral: 229deg 63% 5%;
-      --theme-default: 210deg 13% 86%;
-      --theme-accent: 320deg 81% 60%;
-      --theme-accent-rotate: 230deg 81% 60%;
+      --theme-neutral-100: 229deg 63% 5%;
+      --theme-neutral-200: 229deg 63% 5%;
+      --theme-default-100: 210deg 40% 96%;
+      --theme-default-200: 213deg 27% 84%;
     }
   }
 

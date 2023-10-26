@@ -16,8 +16,8 @@ const { as: Tag = "h2", type = "default", ...rest } = Astro.props;
     "text-3xl": type == "title",
     "text-xl": type == "default",
     "lg:text-4xl": type === "title",
-    "gradient-text": type === "title",
     "lg:text-2xl": type === "default",
+    "text-gradient-200": type === "title",
   }}
 >
   <slot />
