@@ -14,29 +14,32 @@ const { back } = Astro.props;
 <header
   class="py-6 px-2 mb-10 sticky top-0 backdrop-blur-lg z-10 border-b-2 border-dotted border-default-100/10 flex items-center justify-between"
 >
-  <a
-    href="/"
-    class="flex w-full gap-3 items-center group justify-center lg:justify-start"
-  >
-    <Image
-      src={me}
-      width="45"
-      height="45"
-      transition:name="me"
-      alt="an image of me"
-      class="rounded-full"
-      densities={[1, 1.5, 2]}
-    />
-    <div
-      class="text-4xl lg:text-5xl font-bold tracking-tighter leading-none drop-shadow-md"
+  <div class="flex-1 flex justify-center lg:justify-start">
+    <a
+      href="/"
+      class="flex flex-none gap-3 items-center group justify-center lg:justify-start"
     >
-      <span class="text-gradient-300">afreidz</span><span
-        class="text-gradient-100">.codes</span
+      <Image
+        src={me}
+        width="45"
+        height="45"
+        transition:name="me"
+        alt="an image of me"
+        class="rounded-full"
+        densities={[1, 1.5, 2]}
+      />
+      <div
+        class="text-4xl lg:text-5xl font-bold tracking-tighter leading-none drop-shadow-md"
       >
-    </div>
-  </a>
+        <span class="text-gradient-300">afreidz</span><span
+          class="text-gradient-100">.codes</span
+        >
+      </div>
+    </a>
+  </div>
   <Search client:only>
     <Icon slot="trigger" name="ic:outline-search" />
+    <Icon slot="close" name="ic:baseline-close" />
   </Search>
   <!-- {
       back && (

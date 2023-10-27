@@ -10,7 +10,7 @@ const allPosts = await getAllPosts();
 const recents = sort.date(allPosts).slice(0, MAX);
 ---
 
-<Layout title="Hello world">
+<Layout title="Hello world" ignore>
   <main id="main">
     <section class="lg:w-3/4">
       <Heading type="title" as="h1" class="w-max">Hello World!</Heading>

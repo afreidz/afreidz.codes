@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onMount, tick } from "svelte";
   import { shortcut } from "@svelte-put/shortcut";
 
   type Result = {
@@ -11,7 +11,9 @@
   let query = "";
   let active = false;
   let find: any = null;
+  let form: HTMLFormElement;
   let results: Result[] = [];
+  let search: HTMLInputElement;
   let dialog: HTMLDialogElement;
 
   onMount(async () => {
@@ -20,6 +22,8 @@
   });
 
   $: active = dialog?.open;
+
+  $: if (search) tick().then(() => search.focus());
 
   $: if (query.length && find) {
     find
@@ -59,7 +63,7 @@
 
 <button
   on:click={() => dialog.showModal()}
-  class="w-9 h-9 m-auto p-1 transition-colors duration-1000 text-default-100/40 rounded-full hover:text-accent-100"
+  class="w-9 h-9 flex-none p-1 transition-colors duration-1000 text-default-100/40 rounded-full hover:text-accent-100"
 >
   <slot name="trigger" />
 </button>
@@ -71,15 +75,22 @@
     if (dialog.returnValue) window.location.href = dialog.returnValue;
   }}
 >
-  <form on:submit|preventDefault={report}>
+  <form bind:this={form} on:submit|preventDefault={report}>
     <label
       class="flex items-center border-0 border-b-2 border-accent-100 focus-within:border-accent-300"
     >
       <input
         bind:value={query}
-        class="w-full transition-colors duration-1000 bg-transparent px-4 py-2 outline-none text-xl font-semibold peer"
+        class="w-full transition-colors duration-1000 bg-transparent px-4 py-2 outline-none text-xl font-semibold peer order-2"
       />
-      <i class="w-8 h-8 text-accent-100 peer-focus:text-accent-300"
+      <button
+        type="button"
+        tabindex="-1"
+        on:click={() => dialog && dialog.close()}
+        class="w-8 h-8 text-default-100/40 order-1"
+        ><slot name="close" /></button
+      >
+      <i class="w-8 h-8 text-accent-100 peer-focus:text-accent-300 order-3"
         ><slot name="trigger" /></i
       >
     </label>
@@ -89,16 +100,16 @@
           <li
             class="border-b-2 border-dotted border-default-100/40 focus-within:border-accent-300 focus-within:bg-default-100/10"
           >
-            <label class="p-6 flex flex-col">
-              <input
-                type="radio"
-                value={result.url}
-                class="appearance-none"
-                name="goto"
-              />
+            <input
+              type="radio"
+              value={result.url}
+              class="appearance-none w-0 h-0"
+              name="goto"
+            />
+            <a href={result.url} class="p-6 pt-0 flex flex-col" tabindex="-1">
               <strong>{result.title}</strong>
               <small>{@html result.excerpt}</small>
-            </label>
+            </a>
           </li>
         {/each}
       </ul>

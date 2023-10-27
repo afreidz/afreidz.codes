@@ -16,6 +16,7 @@ const {
   back,
   title,
   socialImage,
+  ignore = false,
   splash = false,
   description = siteConfig.description,
 } = Astro.props;
@@ -74,6 +75,7 @@ const metaTitle = !title ? siteConfig.title : `${title} • ${siteConfig.title}`
     tracking-tight
     selection:bg-accent-300/60
   `
+    data-pagefind-ignore={ignore}
   >
     <SkipLink />
     {splash && <div class="absolute inset-0 bg-grid" />}

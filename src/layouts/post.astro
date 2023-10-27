@@ -22,27 +22,32 @@ const { post, headings } = Astro.props;
   <main id="main" class="flex-1 lg:flex">
     {!!headings.length && <TOC {headings} />}
     <article
+      data-pagefind-body
       class="prose contents lg:block lg:prose-lg prose-custom prose-headings:tracking-tighter prose-headings:font-bold prose-headings:text-gradient-100"
     >
       <Hero {post} />
       <slot />
-      <div class="my-10">
-        <Giscus
-          categoryId="DIC_kwDOKiA5os4CaPdb"
-          category="Blog Post Comments"
-          repo="afreidz/afreidz.codes"
-          theme="transparent_dark"
-          repoId="R_kgDOKiA5og"
-          reactionsEnabled="1"
-          inputPosition="top"
-          mapping="pathname"
-          emitMetadata="1"
-          id="comments"
-          client:idle
-          strict="0"
-          lang="en"
-        />
-      </div>
+      {
+        import.meta.env.MODE !== "development" && (
+          <div class="my-10">
+            <Giscus
+              categoryId="DIC_kwDOKiA5os4CaPdb"
+              category="Blog Post Comments"
+              repo="afreidz/afreidz.codes"
+              theme="transparent_dark"
+              repoId="R_kgDOKiA5og"
+              reactionsEnabled="1"
+              inputPosition="top"
+              mapping="pathname"
+              emitMetadata="1"
+              id="comments"
+              client:idle
+              strict="0"
+              lang="en"
+            />
+          </div>
+        )
+      }
     </article>
   </main>
 </BaseLayout>

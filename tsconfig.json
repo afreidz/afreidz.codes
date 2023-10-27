@@ -10,7 +10,8 @@
       "@/layouts/*": ["src/layouts/*"],
       "@/content/*": ["src/content/*"],
       "@/config": ["src/site.config.ts"],
-      "@/components/*": ["src/components/*"]
+      "@/components/*": ["src/components/*"],
+      "/pagefind/pagefind.js": ["dist/pagefind/pagefind.js"]
     }
   },
   "include": ["src", "*.ts"],
