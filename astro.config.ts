@@ -12,4 +12,11 @@ export default defineConfig({
     remarkPlugins: [calculateReadingTime],
   },
   integrations: [tailwind(), svelte(), mdx(), prefetch()],
+  vite: {
+    build: {
+      rollupOptions: {
+        external: ["/pagefind/pagefind.js"],
+      },
+    },
+  },
 });

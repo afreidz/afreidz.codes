@@ -15,7 +15,7 @@
   let dialog: HTMLDialogElement;
 
   onMount(async () => {
-    find = await import("@pagefind");
+    find = await import("/pagefind/pagefind.js");
     find.init();
   });
 
