@@ -74,12 +74,12 @@ const incoming = JSON.parse(qs.get("data") ?? "{}");
 
 Specifically the `?? "{}"` in JSON.parse, which is expecting a string and nothing but a string. The `.get` method of a `URLSearchParams` will return a string **OR** `null`. So I have to protect against that with the `?? "{}"`. You'll notice, however, that I short-circuit the entire block if `qs.has("data")` returns `false`.
 
-I'm not sure where the blame lies, typescript most likely, but I will never be able to cover that line because its not valid scenario given the short-circuit. Yet typescript won't narrow to `string` thus the safety valve of the nullish coelecence, and an uncovered line by extension.
+I'm not sure where the blame lies, typescript most likely, but I will never be able to cover that branch condition because it will never evaluate that branch given the short-circuit. Yet typescript won't narrow to `string` even with that short-circuit for some reason. Hence the safety valve of the nullish coelecence, and an uncovered branch by extension.
 
 ## Thus, I conclude:
 
 <TLDR class="font-bold">THIS IS STUPID.</TLDR>
 
-This is a single example of why coverage metrics are stupid. Every outcome of my code block is tested. Yet there is an unreachable branch by typescript+unit-test standards that is docking my coverage metrics. If you can think of a way to reach this block in a test, or better better handle this scenario, let me know in the comments. I am sure there is something I am not thinking of.
+This is a single example of why coverage metrics are stupid. Every outcome of my code block is tested. Yet there is an unreachable branch by typescript and unit-test standards that is docking my coverage metrics. If you can think of a way to reach this block in a test, or better better handle this scenario, let me know in the comments. I am sure there is something I am not thinking of.
 
 **Regardless, I will continue to hold my position that relying on code coverage as a metric is flawed.**

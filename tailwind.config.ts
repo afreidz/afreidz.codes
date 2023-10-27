@@ -85,12 +85,14 @@ export default {
             blockquote: {
               "@apply not-italic font-semibold mx-6 bg-default-100/5 py-1": "",
             },
+            "blockquote p:first-of-type::before": { content: "none" },
+            "blockquote p:first-of-type::after": { content: "none" },
             pre: {
               "@apply dark:!bg-default-100/5 tracking-normal flex flex-row-reverse":
                 "",
             },
             code: {
-              "@apply px-2 flex-1 inline-block dark:bg-default-100/5 text-default-100 rounded-md !font-mono !font-semibold text-sm lg:!text-base":
+              "@apply before:hidden after:hidden px-2 flex-1 inline-block dark:bg-default-100/5 text-default-100 rounded-md !font-mono !font-semibold text-sm lg:!text-base":
                 "",
             },
             hr: {
