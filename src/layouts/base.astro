@@ -75,9 +75,9 @@ const metaTitle = !title ? siteConfig.title : `${title} • ${siteConfig.title}`
     selection:bg-accent-300/60
   `
   >
+    <SkipLink />
     {splash && <div class="absolute inset-0 bg-grid" />}
     {!splash && <Header {back} />}
-    <SkipLink />
     <slot />
     {!splash && <Footer />}
   </body>

@@ -23,6 +23,14 @@
     }
   }
 
+  * {
+    @apply outline-accent-300;
+  }
+
+  mark {
+    @apply bg-accent-200 font-semibold text-default-100 inline-block rounded-sm leading-tight px-1;
+  }
+
   #main {
     @apply mx-4 lg:mx-16;
   }

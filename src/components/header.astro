@@ -2,6 +2,7 @@
 import Icon from "astro-icon";
 import me from "@/assets/me.jpg";
 import { Image } from "astro:assets";
+import Search from "@/components/search.svelte";
 
 type Props = {
   back?: string;
@@ -15,7 +16,7 @@ const { back } = Astro.props;
 >
   <a
     href="/"
-    class="flex gap-3 items-center group justify-center lg:justify-start"
+    class="flex w-full gap-3 items-center group justify-center lg:justify-start"
   >
     <Image
       src={me}
@@ -34,14 +35,17 @@ const { back } = Astro.props;
       >
     </div>
   </a>
-  {
-    back && (
-      <a href={back}>
-        <Icon
-          name="ic:baseline-arrow-back"
-          class="transition-all text-default-100/40 h-8 hover:text-accent-100"
-        />
-      </a>
-    )
-  }
+  <Search client:only>
+    <Icon slot="trigger" name="ic:outline-search" />
+  </Search>
+  <!-- {
+      back && (
+        <a href={back}>
+          <Icon
+            name="ic:baseline-arrow-back"
+            class="transition-all text-default-100/40 h-8 hover:text-accent-100"
+          />
+        </a>
+      )
+    } -->
 </header>
