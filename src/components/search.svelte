@@ -61,7 +61,9 @@
   }}
 />
 
+<span id="searchLabel" class="sr-only">Open Search Prompt</span>
 <button
+  aria-labelledby="searchLabel"
   on:click={() => dialog.showModal()}
   class="w-9 h-9 flex-none p-1 transition-colors duration-1000 text-default-100/40 rounded-full hover:text-accent-100"
 >
@@ -83,9 +85,9 @@
         bind:value={query}
         class="w-full transition-colors duration-1000 bg-transparent px-4 py-2 outline-none text-xl font-semibold peer order-2"
       />
-      <span id="searchLabel" class="sr-only">Open Search Prompt</span>
+      <span class="sr-only" id="closeLabel">Close Search Prompt</span>
       <button
-        aria-labelledby="searchLabel"
+        aria-labelledby="closeLabel"
         type="button"
         tabindex="-1"
         on:click={() => dialog && dialog.close()}
