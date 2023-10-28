@@ -15,8 +15,10 @@ const { post, headings } = Astro.props;
 ---
 
 <BaseLayout
+  type="article"
   title={post.data.title}
   description={post.data.description}
+  published={post.data.updatedDate || post.data.publishedDate}
   back="/home"
 >
   <main id="main" class="flex-1 lg:flex">

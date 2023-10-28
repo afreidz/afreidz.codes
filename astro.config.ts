@@ -2,6 +2,7 @@ import mdx from "@astrojs/mdx";
 import svelte from "@astrojs/svelte";
 import prefetch from "@astrojs/prefetch";
 import tailwind from "@astrojs/tailwind";
+import partytown from "@astrojs/partytown";
 import { defineConfig } from "astro/config";
 import { calculateReadingTime } from "./src/utils/readingTime";
 
@@ -11,7 +12,17 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [calculateReadingTime],
   },
-  integrations: [tailwind(), svelte(), mdx(), prefetch()],
+  integrations: [
+    mdx(),
+    svelte(),
+    tailwind(),
+    prefetch(),
+    partytown({
+      config: {
+        forward: ["dataLayer.push"],
+      },
+    }),
+  ],
   vite: {
     build: {
       rollupOptions: {
