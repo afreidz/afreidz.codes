@@ -6,25 +6,24 @@ import { defineConfig } from "astro/config";
 import vercel from "@astrojs/vercel/static";
 import { calculateReadingTime } from "./src/utils/readingTime";
 
-
 // https://astro.build/config
 export default defineConfig({
   site: "https://afreidz.codes",
   markdown: {
-    remarkPlugins: [calculateReadingTime]
+    remarkPlugins: [calculateReadingTime],
   },
   integrations: [mdx(), svelte(), tailwind(), prefetch()],
   vite: {
     build: {
       rollupOptions: {
-        external: ["/pagefind/pagefind.js"]
-      }
-    }
+        external: ["/pagefind/pagefind.js"],
+      },
+    },
   },
   output: "static",
   adapter: vercel({
     webAnalytics: {
-      enabled: true
-    }
-  })
+      enabled: true,
+    },
+  }),
 });
