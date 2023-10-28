@@ -90,10 +90,10 @@ const metaTitle = !title ? siteConfig.title : `${title} • ${siteConfig.title}`
     />
     <meta prefix="og: http://ogp.me/ns#" property="og:image" content={me.src} />
 
-    <script
-      type="text/partytown"
-      src="https://www.googletagmanager.com/gtag/js?id=G-YMF8JY4TP6"></script>
-    <script type="text/partytown">
+    <script src="https://www.googletagmanager.com/gtag/js?id=G-YMF8JY4TP6"
+    ></script>
+
+    <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
