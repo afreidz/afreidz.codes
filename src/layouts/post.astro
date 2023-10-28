@@ -4,7 +4,9 @@ import TOC from "@/components/toc.astro";
 import Hero from "@/components/hero.astro";
 import type { MarkdownHeading } from "astro";
 import BaseLayout from "@/layouts/base.astro";
+import PostNav from "@/components/postNav.svelte";
 import type { CollectionEntry } from "astro:content";
+import Icon from "astro-icon";
 
 type Props = {
   headings: MarkdownHeading[];
@@ -22,10 +24,16 @@ const { post, headings } = Astro.props;
   back="/home"
 >
   <main id="main" class="flex-1 lg:flex">
-    {!!headings.length && <TOC {headings} />}
+    <aside class="flex-1 order-2 flex flex-col-reverse justify-between m-4">
+      <PostNav client:only>
+        <Icon name="ic:baseline-arrow-back" slot="home" />
+        <Icon name="ic:baseline-arrow-upward" slot="top" />
+      </PostNav>
+      {!!headings.length && <TOC {headings} />}
+    </aside>
     <article
       data-pagefind-body
-      class="prose contents lg:block lg:prose-lg prose-custom prose-headings:tracking-tighter prose-headings:font-bold prose-headings:text-gradient-100"
+      class="prose contents lg:block lg:prose-lg prose-custom prose-headings:tracking-tighter prose-headings:font-bold prose-headings:text-gradient-100 pb-20"
     >
       <Hero {post} />
       <slot />

@@ -9,8 +9,8 @@ const { headings } = Astro.props;
 const linkClasses = "block px-1 transition-colors link line-clamp-2";
 ---
 
-<aside
-  class="sticky top-36 hidden order-2 w-full min-w-[200px] h-max lg:flex flex-col items-center"
+<div
+  class="sticky top-36 hidden w-full min-w-[200px] h-max lg:flex flex-col items-center"
 >
   <h2 class="font-semibold pl-2">Table of Contents</h2>
   <ul class="mt-4 pl-6 text-sm list-['#_'] marker:text-accent-200">
@@ -39,4 +39,4 @@ const linkClasses = "block px-1 transition-colors link line-clamp-2";
       </a>
     </li>
   </ul>
-</aside>
+</div>
