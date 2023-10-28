@@ -1,0 +1,35 @@
+---
+import { getAllPosts } from "@/utils/data";
+import Date from "@/components/date.astro";
+import BaseLayout from "@/layouts/base.astro";
+import Heading from "@/components/heading.astro";
+
+const posts = await getAllPosts();
+---
+
+<BaseLayout title="All Posts" ignore>
+  <ul class="lg:max-w-[75%]">
+    {
+      posts.map((post) => (
+        <li class="border-b-2 border-dotted border-default-100/10 group">
+          <a
+            rel="prefetch"
+            href={`/posts/${post.slug}`}
+            class="flex flex-col gap-2 mb-6 py-4"
+          >
+            <Date date={post.data.publishedDate} class="opacity-50 text-sm" />
+            <Heading
+              as="h2"
+              type="title"
+              transition:name={`${post.slug}.title`}
+              class="!mb-0 transition-all duration-1000 group-hover:!text-gradient-300"
+            >
+              {post.data.title}
+            </Heading>
+            <small class="opacity-50 text-sm">{post.data.description}</small>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>

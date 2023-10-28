@@ -9,7 +9,6 @@ const { as: Tag = "h2", type = "default", ...rest } = Astro.props;
 ---
 
 <Tag
-  {...rest}
   class:list={{
     "mb-6": true,
     "font-bold": true,
@@ -19,6 +18,7 @@ const { as: Tag = "h2", type = "default", ...rest } = Astro.props;
     "lg:text-2xl": type === "default",
     "text-gradient-100": type === "title",
   }}
+  {...rest}
 >
   <slot />
 </Tag>
