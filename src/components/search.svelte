@@ -83,7 +83,9 @@
         bind:value={query}
         class="w-full transition-colors duration-1000 bg-transparent px-4 py-2 outline-none text-xl font-semibold peer order-2"
       />
+      <span id="searchLabel" class="sr-only">Open Search Prompt</span>
       <button
+        aria-labelledby="searchLabel"
         type="button"
         tabindex="-1"
         on:click={() => dialog && dialog.close()}
@@ -100,12 +102,15 @@
           <li
             class="border-b-2 border-dotted border-default-100/40 focus-within:border-accent-300 focus-within:bg-default-100/10"
           >
-            <input
-              type="radio"
-              value={result.url}
-              class="appearance-none w-0 h-0"
-              name="goto"
-            />
+            <label>
+              <span class="sr-only">Search for articles</span>
+              <input
+                type="radio"
+                value={result.url}
+                class="appearance-none w-0 h-0"
+                name="goto"
+              />
+            </label>
             <a href={result.url} class="p-6 pt-0 flex flex-col" tabindex="-1">
               <strong>{result.title}</strong>
               <small>{@html result.excerpt}</small>
