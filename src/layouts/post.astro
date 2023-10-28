@@ -21,7 +21,6 @@ const { post, headings } = Astro.props;
   title={post.data.title}
   description={post.data.description}
   published={post.data.updatedDate || post.data.publishedDate}
-  back="/home"
 >
   <main id="main" class="flex-1 lg:flex">
     <aside class="flex-1 order-2 flex flex-col-reverse justify-between m-4">

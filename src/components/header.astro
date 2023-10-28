@@ -7,48 +7,38 @@ import Search from "@/components/search.svelte";
 type Props = {
   back?: string;
 };
-
-const { back } = Astro.props;
 ---
 
 <header
   class="py-6 px-2 mb-10 sticky top-0 backdrop-blur-lg z-10 border-b-2 border-dotted border-default-100/10 flex items-center justify-between"
 >
   <div class="flex-1 flex justify-center lg:justify-start">
-    <a
-      href="/"
+    <div
       class="flex flex-none gap-3 items-center group justify-center lg:justify-start"
     >
-      <Image
-        src={me}
-        width="45"
-        height="45"
-        transition:name="me"
-        alt="an image of me"
-        class="rounded-full"
-        densities={[1, 1.5, 2]}
-      />
-      <div
+      <a href="/">
+        <Image
+          src={me}
+          width="45"
+          height="45"
+          transition:name="me"
+          alt="an image of me"
+          class="rounded-full"
+          densities={[1, 1.5, 2]}
+        />
+      </a>
+      <a
+        href="/home"
         class="text-4xl lg:text-5xl font-bold tracking-tighter leading-none drop-shadow-md"
       >
-        <span class="text-gradient-300">afreidz</span><span
-          class="text-gradient-100">.codes</span
+        <span class="text-gradient-300 leading-none">afreidz</span><span
+          class="text-gradient-100 leading-none">.codes</span
         >
-      </div>
-    </a>
+      </a>
+    </div>
   </div>
   <Search client:only>
     <Icon slot="trigger" name="ic:outline-search" />
     <Icon slot="close" name="ic:baseline-close" />
   </Search>
-  <!-- {
-      back && (
-        <a href={back}>
-          <Icon
-            name="ic:baseline-arrow-back"
-            class="transition-all text-default-100/40 h-8 hover:text-accent-100"
-          />
-        </a>
-      )
-    } -->
 </header>

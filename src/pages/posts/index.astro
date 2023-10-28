@@ -1,14 +1,14 @@
 ---
-import { getAllPosts } from "@/utils/data";
 import Date from "@/components/date.astro";
 import BaseLayout from "@/layouts/base.astro";
+import { getAllPosts, sort } from "@/utils/data";
 import Heading from "@/components/heading.astro";
 
-const posts = await getAllPosts();
+const posts = sort.date(await getAllPosts());
 ---
 
 <BaseLayout title="All Posts" ignore>
-  <ul class="lg:max-w-[75%]">
+  <ul class="lg:max-w-[75%] mx-4 lg:mx-6">
     {
       posts.map((post) => (
         <li class="border-b-2 border-dotted border-default-100/10 group">

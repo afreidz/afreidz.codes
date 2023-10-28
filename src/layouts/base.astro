@@ -14,7 +14,6 @@ import SkipLink from "@/components/skip.astro";
 import { ViewTransitions } from "astro:transitions";
 
 const {
-  back,
   type,
   title,
   published,
@@ -113,7 +112,7 @@ const metaTitle = !title ? siteConfig.title : `${title} • ${siteConfig.title}`
   >
     <SkipLink />
     {splash && <div class="absolute inset-0 bg-grid" />}
-    {!splash && <Header {back} />}
+    {!splash && <Header />}
     <slot />
     {!splash && <Footer />}
   </body>
