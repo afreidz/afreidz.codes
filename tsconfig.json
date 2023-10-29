@@ -1,9 +1,11 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
+    "resolveJsonModule": true,
     "lib": ["DOM", "ESNext"],
     "baseUrl": ".",
     "paths": {
+      "@/root/*": ["./*"],
       "@/utils/*": ["src/utils/*"],
       "@/styles/*": ["src/styles/*"],
       "@/assets/*": ["src/assets/*"],

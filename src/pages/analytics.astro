@@ -1,0 +1,43 @@
+---
+import Layout from "@/layouts/base.astro";
+import Heading from "../components/heading.astro";
+import Chart from "@/root/src/components/chart.svelte";
+import { getAllTagOccurances, getAllFeelings, sort } from "@/utils/data";
+
+const feelingData = sort.count(await getAllFeelings(5));
+const tagData = sort.count(await getAllTagOccurances(5));
+---
+
+<Layout title="Post Analytics">
+  <main
+    id="main"
+    class="flex-1 flex gap-8 flex-col items-center lg:flex-row lg:items-start"
+  >
+    <Chart
+      type="radar"
+      client:load
+      labels={feelingData.map((d) => d.label)}
+      values={feelingData.map((d) => d.count)}
+    >
+      <div slot="heading" class="font-mono mb-4">
+        <Heading as="h2" class="uppercase !text-accent-200 !mb-0">
+          My Mood
+        </Heading>
+        <small class="opacity-50 text-base">post counts by feeling</small>
+      </div>
+    </Chart>
+    <Chart
+      type="doughnut"
+      client:load
+      labels={tagData.map((t) => t.label)}
+      values={tagData.map((t) => t.count)}
+    >
+      <div slot="heading" class="font-mono mb-4">
+        <Heading as="h2" class="uppercase !text-accent-200 !mb-0">
+          Top Tags
+        </Heading>
+        <small class="opacity-50 text-base">post counts by tag</small>
+      </div>
+    </Chart>
+  </main>
+</Layout>

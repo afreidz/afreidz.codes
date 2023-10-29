@@ -3,6 +3,7 @@ title: "One time my bff taiwlind and I..."
 description: "In defense of the tailwindcss library as a developer who has traditionally hated on similar libraries"
 publishedDate: "27 Oct 2023"
 tags: ["dear-diary", "tailwindcss"]
+feeling: extatic
 ---
 
 ## Dear Diary

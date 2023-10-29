@@ -4,10 +4,17 @@ const year = new Date().getFullYear();
 ---
 
 <footer
-  class="mt-auto text-sm font-light flex w-full p-4 gap-2 justify-center lg:justify-start bg-default-100/5"
+  class="mt-auto text-sm font-light flex items-center w-full p-4 gap-2 justify-between bg-default-100/5"
 >
-  Copywrite &copy; {year}
-  <strong class="font-semibold text-accent-200 animate-hue-rotate">
-    {siteConfig.author}
-  </strong>
+  <section>
+    Copywrite &copy; {year}
+    <strong
+      class="font-semibold text-accent-200 animate-hue-rotate inline-block ml-3"
+    >
+      {siteConfig.author}
+    </strong>
+  </section>
+  <section>
+    <a class="link-dotted" href="/analytics">analytics</a>
+  </section>
 </footer>

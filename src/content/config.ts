@@ -12,6 +12,13 @@ const post = defineCollection({
     z.object({
       title: z.string().max(60),
       description: z.string().min(50).max(160),
+      feeling: z.enum([
+        "smarmy",
+        "opinionated",
+        "angry",
+        "extatic",
+        "comatose",
+      ]),
       publishedDate: z
         .string()
         .or(z.date())

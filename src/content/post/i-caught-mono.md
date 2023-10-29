@@ -3,6 +3,7 @@ title: "I caught mono. A story about monorepos"
 description: "I was asked about my thoughts on using nx/turbo for an upcomming project and I had a relavant experience recently"
 publishedDate: "17 Oct 2023"
 tags: ["dear-diary", "monorepo"]
+feeling: opinionated
 ---
 
 ## Dear Diary
