@@ -3,7 +3,7 @@ title: "A working draft title"
 description: "This post is for testing the draft post functionality"
 publishedDate: "16 Oct 2023"
 tags: ["test"]
-feeling: comatose
+feeling: copacetic
 draft: true
 ---
 
