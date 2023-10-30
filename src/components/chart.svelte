@@ -30,7 +30,7 @@
     hoverBackgroundColor: colorPalette,
   };
 
-  const radarOpts = {
+  const radarOpts = (max: number) => ({
     plugins: { legend: { display: false }, tooltip: { enabled: false } },
     animation: false,
     scales: {
@@ -49,9 +49,11 @@
         ticks: {
           display: false,
         },
+        suggestedMin: 0,
+        suggestedMax: max,
       },
     },
-  };
+  });
 
   const radarDatasetOpts = {
     fill: true,
@@ -69,7 +71,11 @@
 
   $: if (labels && values && canvas && type) {
     const options =
-      type === "radar" ? radarOpts : type === "doughnut" ? doughnutOpts : {};
+      type === "radar"
+        ? radarOpts(values[0] + 1)
+        : type === "doughnut"
+        ? doughnutOpts
+        : {};
     const datasetOpts =
       type === "radar"
         ? radarDatasetOpts
