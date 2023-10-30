@@ -2,6 +2,7 @@
   import colors from "tailwindcss/colors";
   import Chart, { type ChartTypeRegistry } from "chart.js/auto";
 
+  let chart;
   let canvas: HTMLCanvasElement;
 
   const colorPalette = [
@@ -76,7 +77,7 @@
         ? doughnutDatasetOpts
         : {};
 
-    new Chart(canvas, {
+    chart = new Chart(canvas, {
       type,
       options,
       data: {
@@ -96,12 +97,14 @@
   export let type: $$Props["type"] = "radar";
 </script>
 
-<section class="lg:w-1/2">
+<section class="flex-1 w-full">
   <slot name="heading" />
   <div
-    class="flex flex-col border border-default-100/10 p-8 gap-2 bg-gradient-to-b from-default-100/5 to-transparent rounded-md font-mono"
+    class="flex w-full flex-col border border-default-100/10 p-8 gap-2 bg-gradient-to-b from-default-100/5 to-transparent rounded-md font-mono"
   >
-    <canvas bind:this={canvas} />
+    <div class="relative m-auto w-full max-w-xs">
+      <canvas bind:this={canvas} />
+    </div>
     <ul>
       {#each labels as feeling, i}
         <li
