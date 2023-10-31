@@ -5,7 +5,7 @@ import Preview from "@/components/preview.astro";
 import Socials from "@/components/socials.astro";
 import { getAllPosts, sort } from "@/utils/data";
 
-const MAX = 10;
+const MAX = 5;
 const allPosts = await getAllPosts();
 const recents = sort.date(allPosts).slice(0, MAX);
 ---
@@ -15,9 +15,9 @@ const recents = sort.date(allPosts).slice(0, MAX);
     <section class="lg:w-3/4">
       <Heading type="title" as="h1" class="w-max">Hello World!</Heading>
       <p class="leading-relaxed">
-        Hi there! My name is Andy Freidenfelds and this is the diary of a web
-        developer ... a personal blog and my little corner of the internet. If
-        you want to know more about me, find me on the links below...
+        My name is Andy Freidenfelds and this is the diary of a web developer
+        ... a personal blog and my little corner of the internet. If you want to
+        know more about me, find me on the links below...
       </p>
       <Socials />
     </section>
