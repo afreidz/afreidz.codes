@@ -1,7 +1,7 @@
 ---
 title: "A working draft title"
 description: "This post is for testing the draft post functionality"
-publishedDate: "16 Oct 2023"
+publishedDate: "16 Feb 2022"
 tags: ["test"]
 feeling: copacetic
 draft: true

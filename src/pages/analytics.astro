@@ -1,21 +1,56 @@
 ---
+import {
+  getAllFeelings,
+  getAllTagOccurances,
+  getPostCountsByYearAndMonth,
+} from "@/utils/data";
 import Layout from "@/layouts/base.astro";
 import Heading from "../components/heading.astro";
 import Chart from "@/root/src/components/chart.svelte";
-import { getAllTagOccurances, getAllFeelings, sort } from "@/utils/data";
 
-const feelingData = sort.count(await getAllFeelings(5));
-const tagData = sort.count(await getAllTagOccurances(5));
+const MONTHS = [
+  "JAN",
+  "FEB",
+  "MAR",
+  "APR",
+  "MAY",
+  "JUN",
+  "JUL",
+  "AUG",
+  "SEP",
+  "OCT",
+  "NOV",
+  "DEC",
+];
+
+const feelingData = await getAllFeelings(5);
+const tagData = await getAllTagOccurances(5);
+const dateData = await getPostCountsByYearAndMonth(5);
 ---
 
 <Layout title="Post Analytics">
   <main
     id="main"
-    class="flex-1 px-4 lg:px-6 flex gap-8 flex-col items-center lg:flex-row lg:items-start"
+    class="flex-1 px-4 lg:px-6 flex flex-wrap gap-8 flex-col items-center lg:flex-row lg:items-start"
   >
     <Chart
-      type="radar"
       client:load
+      type="line"
+      class="!w-full"
+      labels={MONTHS}
+      datasets={dateData}
+    >
+      <div slot="heading" class="font-mono mb-4">
+        <Heading as="h2" class="uppercase !text-accent-200 !mb-0">
+          Year and Month
+        </Heading>
+        <small class="opacity-50 text-base">post counts by date</small>
+      </div>
+    </Chart>
+    <Chart
+      client:load
+      type="radar"
+      class="flex-1 w-full lg:w-[50%]"
       labels={feelingData.map((d) => d.label)}
       values={feelingData.map((d) => d.count)}
     >
@@ -27,8 +62,9 @@ const tagData = sort.count(await getAllTagOccurances(5));
       </div>
     </Chart>
     <Chart
-      type="doughnut"
       client:load
+      type="doughnut"
+      class="flex-1 w-full lg:w-[50%]"
       labels={tagData.map((t) => t.label)}
       values={tagData.map((t) => t.count)}
     >

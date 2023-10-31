@@ -3,18 +3,20 @@ import { siteConfig } from "@/config";
 const year = new Date().getFullYear();
 ---
 
-<footer
-  class="mt-auto text-sm font-light flex items-center w-full p-4 gap-2 justify-between bg-default-100/5"
->
-  <section>
-    Copywrite &copy; {year}
-    <strong
-      class="font-semibold text-accent-200 animate-hue-rotate inline-block ml-3"
-    >
-      {siteConfig.author}
-    </strong>
-  </section>
-  <section>
-    <a class="link-dotted" href="/analytics">analytics</a>
-  </section>
+<footer class="mt-auto">
+  <div
+    class="mt-6 text-sm font-light flex items-center w-full p-4 gap-2 justify-between bg-default-100/5"
+  >
+    <section>
+      Copywrite &copy; {year}
+      <strong
+        class="font-semibold text-accent-200 animate-hue-rotate inline-block ml-3"
+      >
+        {siteConfig.author}
+      </strong>
+    </section>
+    <section>
+      <a class="link-dotted" href="/analytics">analytics</a>
+    </section>
+  </div>
 </footer>

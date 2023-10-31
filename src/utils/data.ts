@@ -25,7 +25,7 @@ export async function getAllTagOccurances(limit?: number) {
 
   const arr = keys.map((k, i) => ({ label: k, count: values[i] }));
 
-  return limit ? arr.slice(0, limit) : arr;
+  return limit ? sortByCount(arr).slice(0, limit) : arr;
 }
 
 export async function getAllFeelings(limit?: number) {
@@ -38,6 +38,29 @@ export async function getAllFeelings(limit?: number) {
   const values = Object.values(r);
 
   const arr = keys.map((k, i) => ({ label: k, count: values[i] }));
+
+  return limit ? sortByCount(arr).slice(0, limit) : arr;
+}
+
+export async function getPostCountsByYearAndMonth(limit?: number) {
+  const posts = await getAllPosts();
+  const yearsArray = posts.map((p) =>
+    new Date(p.data.publishedDate).getFullYear(),
+  );
+  const years = [...new Set(yearsArray)];
+
+  const arr = years
+    .map((y) => ({
+      label: y,
+      data: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((m) => {
+        const matchingPosts = posts.filter((p) => {
+          const postDate = new Date(p.data.publishedDate);
+          return postDate.getMonth() === m && postDate.getFullYear() === y;
+        });
+        return matchingPosts.length;
+      }),
+    }))
+    .sort((a, b) => a.label - b.label);
 
   return limit ? arr.slice(0, limit) : arr;
 }
