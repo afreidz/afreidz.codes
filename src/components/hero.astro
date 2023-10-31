@@ -36,7 +36,7 @@ const { remarkPluginFrontmatter: frontmatter } = await post.render();
           {post.data.tags.map((tag, i) => (
             <li class="flex">
               <a
-                href={`/tags/${tag}/`}
+                href={`/posts/tagged/${tag}/`}
                 class="inline-block link-dotted before:content-['#']"
                 aria-label={`View more blogs with the tag ${tag}`}
               >

@@ -9,12 +9,39 @@ export async function getAllPosts() {
   });
 }
 
+export async function getAllTags() {
+  const posts = await getAllPosts();
+  return [...new Set(posts.map((p) => p.data.tags).flat(2))];
+}
+
+export async function getPostByTag(t: string) {
+  return await getCollection("post", ({ data }) => {
+    return (
+      (import.meta.env.PROD ? data.draft !== true : true) &&
+      data.tags.includes(t)
+    );
+  });
+}
+
+export async function getAllFeelings() {
+  const posts = await getAllPosts();
+  return [...new Set(posts.map((p) => p.data.feeling))];
+}
+
+export async function getPostsByFeeling(f: string) {
+  return await getCollection("post", ({ data }) => {
+    return (
+      (import.meta.env.PROD ? data.draft !== true : true) && data.feeling === f
+    );
+  });
+}
+
 function reduceCounts(all: { [key: string]: number }, us: string) {
   all[us] = ++all[us] || 1;
   return all;
 }
 
-export async function getAllTagOccurances(limit?: number) {
+export async function getAllTagCounts(limit?: number) {
   const posts = await getAllPosts();
   const tags = posts.map((p) => p.data.tags).flat(2);
 
@@ -28,7 +55,7 @@ export async function getAllTagOccurances(limit?: number) {
   return limit ? sortByCount(arr).slice(0, limit) : arr;
 }
 
-export async function getAllFeelings(limit?: number) {
+export async function getAllFeelingsCounts(limit?: number) {
   const posts = await getAllPosts();
   const feelings = posts.map((p) => p.data.feeling);
 

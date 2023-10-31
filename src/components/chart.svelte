@@ -16,6 +16,7 @@
 
   type $$Props = {
     class: string;
+    baseURL: string;
     labels: string[];
     values: number[] | undefined;
     type: keyof ChartTypeRegistry;
@@ -24,11 +25,12 @@
 
   let labels: $$Props["labels"];
   let type: $$Props["type"] = "radar";
+  let baseURL: $$Props["baseURL"] = "";
   let classList: $$Props["class"] = "";
   let values: $$Props["values"] = undefined;
   let datasets: $$Props["datasets"] = undefined;
 
-  export { labels, type, values, datasets, classList as class };
+  export { labels, baseURL, type, values, datasets, classList as class };
 
   const colorPalette = [
     colors.indigo[500],
@@ -226,18 +228,23 @@
     </div>
     {#if values}
       <ul>
-        {#each labels as feeling, i}
+        {#each labels as label, i}
           <li
-            class="px-4 py-3 border-b border-default-100/10 font-semibold flex justify-between last-of-type:border-b-0"
+            class="border-b border-default-100/10 font-semibold last-of-type:border-b-0"
           >
-            <span class="flex gap-4 items-center">
-              <i
-                class="rounded-full w-3 h-3"
-                style="background-color: {colorPalette[i]}"
-              />
-              {feeling}
-            </span>
-            <strong>{values[i]}</strong>
+            <a
+              href={`${baseURL}/${label}`}
+              class="px-4 py-3 flex justify-between"
+            >
+              <span class="flex gap-4 items-center">
+                <i
+                  class="rounded-full w-3 h-3"
+                  style="background-color: {colorPalette[i]}"
+                />
+                {label}
+              </span>
+              <strong>{values[i]}</strong>
+            </a>
           </li>
         {/each}
       </ul>

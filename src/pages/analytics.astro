@@ -1,7 +1,7 @@
 ---
 import {
-  getAllFeelings,
-  getAllTagOccurances,
+  getAllFeelingsCounts,
+  getAllTagCounts,
   getPostCountsByYearAndMonth,
 } from "@/utils/data";
 import Layout from "@/layouts/base.astro";
@@ -23,8 +23,8 @@ const MONTHS = [
   "DEC",
 ];
 
-const feelingData = await getAllFeelings(5);
-const tagData = await getAllTagOccurances(5);
+const feelingData = await getAllFeelingsCounts(5);
+const tagData = await getAllTagCounts(5);
 const dateData = await getPostCountsByYearAndMonth(5);
 ---
 
@@ -50,6 +50,7 @@ const dateData = await getPostCountsByYearAndMonth(5);
     <Chart
       client:load
       type="radar"
+      baseURL="/posts/feeling"
       class="flex-1 w-full lg:w-[50%]"
       labels={feelingData.map((d) => d.label)}
       values={feelingData.map((d) => d.count)}
@@ -64,6 +65,7 @@ const dateData = await getPostCountsByYearAndMonth(5);
     <Chart
       client:load
       type="doughnut"
+      baseURL="/posts/tagged"
       class="flex-1 w-full lg:w-[50%]"
       labels={tagData.map((t) => t.label)}
       values={tagData.map((t) => t.count)}

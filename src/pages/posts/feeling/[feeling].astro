@@ -1,14 +1,26 @@
 ---
 import Date from "@/components/date.astro";
+import type { GetStaticPaths } from "astro";
 import BaseLayout from "@/layouts/base.astro";
-import { getAllPosts, sort } from "@/utils/data";
 import Heading from "@/components/heading.astro";
+import { getPostsByFeeling, getAllFeelings, sort } from "@/utils/data";
 
-const posts = sort.date(await getAllPosts());
+export const getStaticPaths = (async () => {
+  const feelings = await getAllFeelings();
+  return feelings.map((feeling) => ({
+    params: { feeling },
+  }));
+}) satisfies GetStaticPaths;
+
+const { feeling } = Astro.params;
+const posts = feeling ? sort.date(await getPostsByFeeling(feeling)) : [];
 ---
 
-<BaseLayout title="All Posts" ignore>
-  <main id="main">
+<BaseLayout title=`Posts tagged "${feeling}"`>
+  <main id="main" class="flex-1 flex-col">
+    <Heading as="h1" class="mb-8 text-gradient-300 text-center mx-auto w-max">
+      Posts feeling "{feeling}"
+    </Heading>
     <ul class="lg:max-w-[75%]">
       {
         posts.map((post) => (
