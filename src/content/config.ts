@@ -17,6 +17,7 @@ const post = defineCollection({
         "opinionated",
         "angry",
         "extatic",
+        "infected",
         "copacetic",
       ]),
       publishedDate: z
