@@ -1,3 +1,4 @@
+import { FEELINGS } from "@/content/config";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 
@@ -60,11 +61,7 @@ export async function getAllFeelingsCounts(limit?: number) {
   const feelings = posts.map((p) => p.data.feeling);
 
   const r = feelings.reduce(reduceCounts, {});
-
-  const keys = Object.keys(r);
-  const values = Object.values(r);
-
-  const arr = keys.map((k, i) => ({ label: k, count: values[i] }));
+  const arr = FEELINGS.map((k) => ({ label: k, count: r[k] || 0 }));
 
   return limit ? sortByCount(arr).slice(0, limit) : arr;
 }

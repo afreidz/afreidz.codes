@@ -16,7 +16,7 @@ const { feeling } = Astro.params;
 const posts = feeling ? sort.date(await getPostsByFeeling(feeling)) : [];
 ---
 
-<BaseLayout title=`Posts tagged "${feeling}"`>
+<BaseLayout title=`Posts feeling "${feeling}"`>
   <main id="main" class="flex-1 flex-col">
     <Heading as="h1" class="mb-8 text-gradient-300 text-center mx-auto w-max">
       Posts feeling "{feeling}"

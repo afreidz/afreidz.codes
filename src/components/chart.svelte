@@ -38,6 +38,7 @@
     colors.amber[500],
     colors.violet[500],
     colors.fuchsia[500],
+    colors.blue[500],
   ];
 
   const doughnutOpts: ChartOptions = {
@@ -137,9 +138,9 @@
     animation: false,
     pointHitRadius: 5,
     pointBorderWidth: 2,
+    hoverBorderWidth: 2,
     pointHoverRadius: 5,
     hitPointBorderWidth: 2,
-    hoverPointBorderWidth: 2,
     pointBackgroundColor: colors.slate[950],
   };
 
@@ -198,6 +199,7 @@
                 label: d.label.toString(),
                 ...datasetOpts,
                 borderColor: colorPalette[datasets?.indexOf(d) ?? 0],
+                pointHoverBorderColor: colorPalette[datasets?.indexOf(d) ?? 0],
               }))
           : [],
       },
@@ -229,11 +231,13 @@
     {#if values}
       <ul>
         {#each labels as label, i}
+          {@const tag = values[i] > 0 ? "a" : "p"}
           <li
             class="border-b border-default-100/10 font-semibold last-of-type:border-b-0"
           >
-            <a
-              href={`${baseURL}/${label}`}
+            <svelte:element
+              this={tag}
+              href={values[i] > 0 ? `${baseURL}/${label}` : undefined}
               class="px-4 py-3 flex justify-between"
             >
               <span class="flex gap-4 items-center">
@@ -244,7 +248,7 @@
                 {label}
               </span>
               <strong>{values[i]}</strong>
-            </a>
+            </svelte:element>
           </li>
         {/each}
       </ul>

@@ -7,7 +7,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "postbuild": "pagefind --site ${STATIC_OUTPUT_DIR:-dist}",
+    "postbuild": "pagefind --site ${STATIC_OUTPUT_DIR:-.vercel/output/static}",
     "astro": "astro"
   },
   "dependencies": {
