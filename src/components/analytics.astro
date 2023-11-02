@@ -12,7 +12,7 @@ const { slug } = Astro.props;
 
     send() {
       navigator.sendBeacon(
-        "/api/anayltics/capture",
+        "/api/analytics/capture",
         JSON.stringify({
           slug: this.dataset.slug,
         }),
