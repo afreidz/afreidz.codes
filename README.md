@@ -1,5 +1,5 @@
 # afreidz.codes
 
 ```
-npm run dev
+npm start
 ```

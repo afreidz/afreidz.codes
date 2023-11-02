@@ -3,7 +3,7 @@ import svelte from "@astrojs/svelte";
 import prefetch from "@astrojs/prefetch";
 import tailwind from "@astrojs/tailwind";
 import { defineConfig } from "astro/config";
-import vercel from "@astrojs/vercel/static";
+import vercel from "@astrojs/vercel/serverless";
 import { calculateReadingTime } from "./src/utils/readingTime";
 
 // https://astro.build/config
@@ -20,8 +20,9 @@ export default defineConfig({
       },
     },
   },
-  output: "static",
+  output: "hybrid",
   adapter: vercel({
+    edgeMiddleware: true,
     webAnalytics: { enabled: true },
     speedInsights: { enabled: true },
   }),

@@ -13,7 +13,7 @@
       "@/content/*": ["src/content/*"],
       "@/config": ["src/site.config.ts"],
       "@/components/*": ["src/components/*"],
-      "/pagefind/pagefind.js": ["dist/pagefind/pagefind.js"]
+      "/pagefind/pagefind.js": [".vercel/output/static/pagefind/pagefind.js"]
     }
   },
   "include": ["src", "*.ts"],

@@ -6,8 +6,6 @@
       document.body.scrollTop > 200 || document.documentElement.scrollTop > 200;
   }
 
-  $: console.log(showBackToTop);
-
   function goToTop() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }

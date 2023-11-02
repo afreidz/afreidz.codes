@@ -1,0 +1,23 @@
+---
+const { slug } = Astro.props;
+---
+
+<send-beacon data-slug={slug}></send-beacon>
+<script>
+  class SendBeacon extends HTMLElement {
+    constructor() {
+      super();
+      this.send();
+    }
+
+    send() {
+      navigator.sendBeacon(
+        "/api/anayltics/capture",
+        JSON.stringify({
+          slug: this.dataset.slug,
+        }),
+      );
+    }
+  }
+  customElements.define("send-beacon", SendBeacon);
+</script>
