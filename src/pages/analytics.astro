@@ -1,13 +1,16 @@
 ---
 import {
-  getAllFeelingsCounts,
   getAllTagCounts,
+  getAllFeelingsCounts,
   getPostCountsByYearAndMonth,
 } from "@/utils/data";
-import Layout from "@/layouts/base.astro";
-import Heading from "../components/heading.astro";
-import Chart from "@/root/src/components/chart.svelte";
 
+import Layout from "@/layouts/base.astro";
+import Chart from "@/components/chart.svelte";
+import Heading from "@/components/heading.astro";
+import VisitMap from "@/root/src/components/visitMap.svelte";
+
+const isProduction = import.meta.env.PROD;
 const MONTHS = [
   "JAN",
   "FEB",
@@ -23,8 +26,8 @@ const MONTHS = [
   "DEC",
 ];
 
-const feelingData = await getAllFeelingsCounts(6);
 const tagData = await getAllTagCounts(6);
+const feelingData = await getAllFeelingsCounts(6);
 const dateData = await getPostCountsByYearAndMonth(5);
 ---
 
@@ -77,5 +80,17 @@ const dateData = await getPostCountsByYearAndMonth(5);
         <small class="opacity-50 text-base">post counts by tag</small>
       </div>
     </Chart>
+    {
+      isProduction && (
+        <VisitMap client:only class="!w-full">
+          <div slot="heading" class="font-mono mb-4">
+            <Heading as="h2" class="uppercase !text-accent-200 !mb-0">
+              Geolocation
+            </Heading>
+            <small class="opacity-50 text-base">visitors by location</small>
+          </div>
+        </VisitMap>
+      )
+    }
   </main>
 </Layout>
