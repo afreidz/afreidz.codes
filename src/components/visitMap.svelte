@@ -79,7 +79,7 @@
         longitude,
         value: counts[city],
       }))
-      .sort();
+      .sort((a, b) => a.value - b.value);
   });
 
   $: if (data && canvas && countries) {
