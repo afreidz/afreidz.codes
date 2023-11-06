@@ -71,15 +71,15 @@
       return all;
     }, {} as LatLongMap);
 
-    data = Object.entries(latlongMap).map(
-      ([city, { latitude, longitude, flag }]) => ({
+    data = Object.entries(latlongMap)
+      .map(([city, { latitude, longitude, flag }]) => ({
         city,
         flag,
         latitude,
         longitude,
         value: counts[city],
-      }),
-    );
+      }))
+      .sort();
   });
 
   $: if (data && canvas && countries) {
