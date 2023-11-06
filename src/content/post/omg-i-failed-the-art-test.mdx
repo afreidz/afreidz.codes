@@ -4,8 +4,9 @@ description: Have you struggled with writing effective unit tests for front-end 
 publishedDate: 3 Nov 2023
 tags: ["dear-diary", "testing"]
 feeling: opinionated
-draft: true
 ---
+
+import TLDR from "@/components/tldr.astro";
 
 ## Dear Diary
 
@@ -131,3 +132,13 @@ Using `fetch` in a component is an insanely common pattern. But what happens whe
 A better idea may be to isolate the usage of `fetch` (or other complex apis) outside of your component. Such that you can more intentionally mock the expected output without needing to do things like intercepting an outgoing `HTTP` call. This is a practice I am still learning. How to write code in a testable manner is something newer to our field, and requires some careful forethought. When you are surrounded by complex browser APIs and an insane dependency tree, this becomes harder to do.
 
 Its been my experience that I spend way more time mocking, refactoring, mocking some more, than I do authoring the component and the test cases combined.
+
+## What do I do now?
+
+None of this is to say that we should throw away testing on the front-end because its "difficult." However, I tend to take the stance of inverting the [pyramid](https://www.browserstack.com/guide/testing-pyramid-for-test-automation#toc1) slightly when it comes to components. Put less stock in the 80% coverage metric at the unit-level. Prefer to cover MORE in the integration and e2e tests. The best way to test a component is when its running in a browser environment.
+
+I have also found [TypeScript](https://www.typescriptlang.org/) and [ESLint](https://eslint.org/) useful for catching (non-business logic)issues before they leave the development environment. Each of those have their own overhead, and configuring TypeScript can sometimes be just as difficult as a testing framework. However, in my experience they catch just as much, if not more than unit tests. This is especially true over time as the unit test environment scales, ages, and often festers.
+
+But most importantly, involve design teams in the acceptance process! There is no automated procedure that can replace the eye of the designer. They will likely have the best context when it comes to component behaviors. This is good practice for MANY reasons, but they can help cover the testing scope that unit tests cannot. It may be manual, and it may be tedious, but it will be accurate, and worth it!
+
+<TLDR>Until next time, diary.</TLDR>
