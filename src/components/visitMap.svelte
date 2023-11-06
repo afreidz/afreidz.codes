@@ -41,6 +41,8 @@
   let data: MapData[] = [];
   let canvas: HTMLCanvasElement;
   let countries: ChartGeo.Feature;
+  let projection: ChartGeo.IProjectionScaleOptions["projection"] =
+    "equirectangular";
 
   onMount(async () => {
     const { visits }: { visits: Visit[] } = await (
@@ -82,7 +84,7 @@
       .sort((a, b) => b.value - a.value);
   });
 
-  $: if (data && canvas && countries) {
+  $: if (data && canvas && countries && projection) {
     if (chart) chart.destroy();
     chart = new BubbleMapChart(canvas, {
       data: {
@@ -103,11 +105,36 @@
         ],
       },
       options: {
-        plugins: { legend: { display: false }, tooltip: { enabled: false } },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: "rgba(255,255,255, 0.1)",
+            borderColor: "rgba(0,0,0,0)",
+            bodyColor: colors.white,
+            displayColors: false,
+            animation: false,
+            boxPadding: 0,
+            boxHeight: 0,
+            boxWidth: 0,
+            padding: 8,
+            bodyFont: {
+              size: 14,
+              weight: "bold",
+            },
+            callbacks: {
+              label(context) {
+                const data = context.raw as MapData;
+                return `${data.flag} ${data.city.replaceAll("  ", " ")} - ${
+                  data.value
+                }`;
+              },
+            },
+          },
+        },
         scales: {
           projection: {
             axis: "x",
-            projection: "equirectangular",
+            projection,
           },
           size: {
             axis: "r",
@@ -124,7 +151,23 @@
 
 {#if data.length}
   <section class={classList}>
-    <slot name="heading" />
+    <div class="flex justify-between items-end">
+      <slot name="heading" />
+      <div class="my-4 flex gap-4">
+        <button
+          class="px-3 py-2 rounded-md border border-default-100/10 font-mono font-bold text-center"
+          on:click={() => (projection = "albersUsa")}
+          class:opacity-50={projection !== "albersUsa"}
+          style="color: {colors.indigo[500]}; ">USA</button
+        >
+        <button
+          class="px-3 py-2 rounded-md border border-default-100/10 font-mono font-bold text-center"
+          on:click={() => (projection = "equirectangular")}
+          class:opacity-50={projection !== "equirectangular"}
+          style="color: {colors.amber[500]}; ">Global</button
+        >
+      </div>
+    </div>
     <div
       class="flex w-full flex-col border border-default-100/10 p-8 gap-2 bg-gradient-to-b from-default-100/5 to-transparent rounded-md font-mono"
     >
