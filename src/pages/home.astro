@@ -26,6 +26,9 @@ const recents = sort.date(allPosts).slice(0, MAX);
       <ul class="flex flex-col gap-3">
         {recents.map((post) => <Preview as="li" {post} />)}
       </ul>
+      <strong class="my-6 flex justify-center">
+        <a class="link-dotted" href="/posts">see more</a>
+      </strong>
     </section>
   </main>
 </Layout>
