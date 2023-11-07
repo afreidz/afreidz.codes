@@ -37,6 +37,7 @@
     };
   };
 
+  let limit = 10;
   let chart: Chart;
   let data: MapData[] = [];
   let canvas: HTMLCanvasElement;
@@ -46,7 +47,7 @@
 
   onMount(async () => {
     const { visits }: { visits: Visit[] } = await (
-      await fetch("/api/analytics")
+      await fetch(`/api/analytics`)
     ).json();
 
     const topodata = await (
@@ -146,7 +147,7 @@
   }
 
   let classList: string = "";
-  export { classList as class };
+  export { classList as class, limit };
 </script>
 
 {#if data.length}
@@ -174,8 +175,8 @@
       <div class="relative m-auto w-full">
         <canvas bind:this={canvas} />
       </div>
-      <ul>
-        {#each data.slice(0, 10) as visit, i}
+      <ul class="text-sm lg:text-base">
+        {#each data.slice(0, limit) as visit, i}
           <li
             class="border-b border-default-100/10 font-semibold last-of-type:border-b-0 flex justify-between items-center px-4 py-3"
           >

@@ -6,9 +6,11 @@ import {
 } from "@/utils/data";
 
 import Layout from "@/layouts/base.astro";
-import Chart from "@/components/chart.svelte";
 import Heading from "@/components/heading.astro";
-import VisitMap from "@/root/src/components/visitMap.svelte";
+import Chart from "@/components/analytics/chart.svelte";
+import TopPosts from "@/components/analytics/topPosts.svelte";
+import VisitMap from "@/components/analytics/visitMap.svelte";
+import { getCollection } from "astro:content";
 
 const isProduction = import.meta.env.PROD;
 const MONTHS = [
@@ -27,6 +29,7 @@ const MONTHS = [
 ];
 
 const tagData = await getAllTagCounts(6);
+const posts = await getCollection("post");
 const feelingData = await getAllFeelingsCounts(6);
 const dateData = await getPostCountsByYearAndMonth(5);
 ---
@@ -36,20 +39,14 @@ const dateData = await getPostCountsByYearAndMonth(5);
     id="main"
     class="flex-1 px-4 lg:px-6 flex flex-wrap gap-8 flex-col items-center lg:flex-row lg:items-start"
   >
-    <Chart
-      client:load
-      type="line"
-      class="!w-full"
-      labels={MONTHS}
-      datasets={dateData}
-    >
+    <TopPosts client:only class="!w-full" {posts}>
       <div slot="heading" class="font-mono mb-4">
         <Heading as="h2" class="uppercase !text-accent-200 !mb-0">
-          Year and Month
+          Popular Posts
         </Heading>
-        <small class="opacity-50 text-base">post counts by date</small>
+        <small class="opacity-50 text-base">recent visits by post</small>
       </div>
-    </Chart>
+    </TopPosts>
     <Chart
       client:load
       type="radar"
@@ -82,7 +79,7 @@ const dateData = await getPostCountsByYearAndMonth(5);
     </Chart>
     {
       isProduction && (
-        <VisitMap client:only class="!w-full">
+        <VisitMap client:only class="!w-full" limit={6}>
           <div slot="heading" class="font-mono mb-4">
             <Heading as="h2" class="uppercase !text-accent-200 !mb-0">
               Geolocation
@@ -94,5 +91,19 @@ const dateData = await getPostCountsByYearAndMonth(5);
         </VisitMap>
       )
     }
+    <Chart
+      client:load
+      type="line"
+      class="!w-full"
+      labels={MONTHS}
+      datasets={dateData}
+    >
+      <div slot="heading" class="font-mono mb-4">
+        <Heading as="h2" class="uppercase !text-accent-200 !mb-0">
+          Year and Month
+        </Heading>
+        <small class="opacity-50 text-base">post counts by date</small>
+      </div>
+    </Chart>
   </main>
 </Layout>

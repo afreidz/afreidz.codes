@@ -2,7 +2,9 @@
 import Icon from "astro-icon";
 import me from "@/assets/me.jpg";
 import { Image } from "astro:assets";
+import { siteConfig } from "@/config";
 import Layout from "@/layouts/base.astro";
+import Random from "@/components/random.svelte";
 ---
 
 <Layout title="" splash="true" ignore>
@@ -25,13 +27,16 @@ import Layout from "@/layouts/base.astro";
         class="rounded-full relative h-32 w-32 lg:w-auto lg:h-auto"
       />
     </div>
-    <h1 class="text-center text-xl lg:text-2xl">
+    <h1 class="text-center flex flex-col text-xl lg:text-2xl">
       <strong class="text-gradient-300 text-2xl lg:text-4xl"
         >Andy Freidenfelds</strong
       >
-      <br />
-       Full time <strong>developer.</strong>
-       Part time <strong>smartass.</strong>
+      <div class="text-base lg:text-xl">
+        <span>full time</span>{" "}
+        <Random words={siteConfig.fulltime} class="font-bold" />,
+        <span>part time</span>{" "}
+        <Random words={siteConfig.parttime} class="font-bold" />
+      </div>
     </h1>
     <Icon
       name="ic:baseline-arrow-downward"

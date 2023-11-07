@@ -4,6 +4,7 @@
     type ChartTypeRegistry,
     type Chart as ChartType,
   } from "chart.js/auto";
+  import { highlights } from "@/config";
   import colors from "tailwindcss/colors";
 
   Chart.defaults.font.family = "'IBM Plex Mono', monospace";
@@ -32,15 +33,6 @@
 
   export { labels, baseURL, type, values, datasets, classList as class };
 
-  const colorPalette = [
-    colors.indigo[500],
-    colors.rose[500],
-    colors.amber[500],
-    colors.violet[500],
-    colors.fuchsia[500],
-    colors.blue[500],
-  ];
-
   const doughnutOpts: ChartOptions = {
     plugins: { legend: { display: false }, tooltip: { enabled: false } },
     animation: false,
@@ -48,8 +40,8 @@
 
   const doughnutDatasetOpts = {
     borderWidth: 0,
-    backgroundColor: colorPalette,
-    hoverBackgroundColor: colorPalette,
+    backgroundColor: highlights,
+    hoverBackgroundColor: highlights,
   };
 
   const radarOpts: (m: number) => ChartOptions = (max) => ({
@@ -85,8 +77,8 @@
     pointHoverRadius: 10,
     pointHoverBorderWidth: 0,
     borderColor: "rgba(255,255,255,1)",
-    pointBackgroundColor: colorPalette,
-    pointHoverBackgroundColor: colorPalette,
+    pointBackgroundColor: highlights,
+    pointHoverBackgroundColor: highlights,
     backgroundColor: "rgba(255,255,255,0.3)",
   };
 
@@ -198,8 +190,8 @@
                 data: d.data,
                 label: d.label.toString(),
                 ...datasetOpts,
-                borderColor: colorPalette[datasets?.indexOf(d) ?? 0],
-                pointHoverBorderColor: colorPalette[datasets?.indexOf(d) ?? 0],
+                borderColor: highlights[datasets?.indexOf(d) ?? 0],
+                pointHoverBorderColor: highlights[datasets?.indexOf(d) ?? 0],
               }))
           : [],
       },
@@ -229,7 +221,7 @@
       <canvas bind:this={canvas} />
     </div>
     {#if values}
-      <ul>
+      <ul class="text-sm lg:text-base">
         {#each labels as label, i}
           {@const tag = values[i] > 0 ? "a" : "p"}
           <li
@@ -238,12 +230,12 @@
             <svelte:element
               this={tag}
               href={values[i] > 0 ? `${baseURL}/${label}` : undefined}
-              class="px-4 py-3 flex justify-between"
+              class="px-2 py-2 lg:px-4 lg:py-3 flex justify-between"
             >
               <span class="flex gap-4 items-center">
                 <i
                   class="rounded-full w-3 h-3"
-                  style="background-color: {colorPalette[i]}"
+                  style="background-color: {highlights[i]}"
                 />
                 {label}
               </span>
@@ -261,7 +253,7 @@
           class="px-3 py-2 rounded-md border border-default-100/10 font-mono font-bold text-center"
           on:click={() => toggleDataset(dataset.label)}
           class:opacity-50={!enabledDatasets?.includes(dataset.label)}
-          style="color: {colorPalette[i]}; ">{dataset.label}</button
+          style="color: {highlights[i]}; ">{dataset.label}</button
         >
       {/each}
     </div>
