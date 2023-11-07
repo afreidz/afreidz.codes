@@ -33,9 +33,9 @@ import Random from "@/components/random.svelte";
       >
       <div class="text-base lg:text-xl">
         <span>full time</span>{" "}
-        <Random words={siteConfig.fulltime} class="font-bold" />,
+        <Random client:load words={siteConfig.fulltime} class="font-bold" />,
         <span>part time</span>{" "}
-        <Random words={siteConfig.parttime} class="font-bold" />
+        <Random client:load words={siteConfig.parttime} class="font-bold" />
       </div>
     </h1>
     <Icon
