@@ -39,14 +39,18 @@ const dateData = await getPostCountsByYearAndMonth(5);
     id="main"
     class="flex-1 px-4 lg:px-6 flex flex-wrap gap-8 flex-col items-center lg:flex-row lg:items-start"
   >
-    <TopPosts client:only class="!w-full" {posts}>
-      <div slot="heading" class="font-mono mb-4">
-        <Heading as="h2" class="uppercase !text-accent-200 !mb-0">
-          Popular Posts
-        </Heading>
-        <small class="opacity-50 text-base">recent visits by post</small>
-      </div>
-    </TopPosts>
+    {
+      isProduction && (
+        <TopPosts client:only class="!w-full" {posts}>
+          <div slot="heading" class="font-mono mb-4">
+            <Heading as="h2" class="uppercase !text-accent-200 !mb-0">
+              Popular Posts
+            </Heading>
+            <small class="opacity-50 text-base">recent visits by post</small>
+          </div>
+        </TopPosts>
+      )
+    }
     <Chart
       client:load
       type="radar"
@@ -85,6 +89,7 @@ const dateData = await getPostCountsByYearAndMonth(5);
               Geolocation
             </Heading>
             <small class="opacity-50 text-base">
+              {" "}
               recent visitors by location
             </small>
           </div>

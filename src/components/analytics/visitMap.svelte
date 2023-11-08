@@ -38,6 +38,7 @@
   };
 
   let limit = 10;
+  let open = false;
   let chart: Chart;
   let data: MapData[] = [];
   let canvas: HTMLCanvasElement;
@@ -175,19 +176,50 @@
       <div class="relative m-auto w-full">
         <canvas bind:this={canvas} />
       </div>
-      <ul class="text-sm lg:text-base">
-        {#each data.slice(0, limit) as visit, i}
-          <li
-            class="border-b border-default-100/10 font-semibold last-of-type:border-b-0 flex justify-between items-center px-4 py-3"
-          >
-            <span>
-              {visit.flag}
-              {visit.city}
-            </span>
-            <strong>{visit.value}</strong>
-          </li>
-        {/each}
-      </ul>
+      <details {open}>
+        <summary class="list-none flex flex-col items-center">
+          <ul class="text-sm lg:text-base w-full">
+            {#each data.slice(0, limit) as visit}
+              <li
+                class="border-b border-default-100/10 font-semibold flex justify-between items-center px-4 py-3"
+              >
+                <span>
+                  {visit.flag}
+                  {visit.city}
+                </span>
+                <strong>{visit.value}</strong>
+              </li>
+            {/each}
+          </ul>
+          {#if !open}
+            <button
+              class="px-3 w-max py-2 rounded-md border border-default-100/10 my-4 mx-auto text-accent-100 font-mono font-bold text-center"
+              on:click={() => (open = true)}>show more</button
+            >
+          {/if}
+        </summary>
+        <div class="flex flex-col items-center">
+          <ul class="text-sm lg:text-base w-full">
+            {#each data as visit}
+              <li
+                class="border-b border-default-100/10 font-semibold last-of-type:border-b-0 flex justify-between items-center px-4 py-3"
+              >
+                <span>
+                  {visit.flag}
+                  {visit.city}
+                </span>
+                <strong>{visit.value}</strong>
+              </li>
+            {/each}
+          </ul>
+          {#if open}
+            <button
+              class="px-3 py-2 w-max rounded-md border border-default-100/10 my-4 mx-auto text-accent-100 font-mono font-bold text-center"
+              on:click={() => (open = false)}>show less</button
+            >
+          {/if}
+        </div>
+      </details>
     </div>
   </section>
 {/if}
