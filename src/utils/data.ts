@@ -1,4 +1,4 @@
-import { FEELINGS } from "@/content/config";
+import { FEELINGS } from "@/config";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 
