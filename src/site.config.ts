@@ -9,6 +9,7 @@ export type SiteConfig = {
   parttime: string[];
   description: string;
   highlights: string[];
+  feelings: typeof FEELINGS;
   socialLinks: SocialLink[];
   date: {
     options: Intl.DateTimeFormatOptions;
@@ -37,6 +38,7 @@ export const fulltime: SiteConfig["fulltime"] = [
   "husband",
   "dreamer",
 ];
+
 export const parttime: SiteConfig["parttime"] = [
   "smartass",
   "sports enthusiast",
@@ -46,6 +48,15 @@ export const parttime: SiteConfig["parttime"] = [
   "hockey pylon",
   "sleeper",
 ];
+
+export const FEELINGS = [
+  "smart-assed",
+  "opinionated",
+  "angry",
+  "ecstatic",
+  "infected",
+  "copacetic",
+] as const;
 
 const contact = "me@afreidz.codes";
 export const siteConfig: SiteConfig = {
@@ -57,6 +68,7 @@ export const siteConfig: SiteConfig = {
   date: {
     options: { day: "numeric", month: "short", year: "numeric" },
   },
+  feelings: FEELINGS,
   highlights,
   fulltime,
   parttime,

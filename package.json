@@ -7,6 +7,7 @@
     "start": "vercel dev",
     "build": "astro build",
     "preview": "astro preview",
+    "spell": "cspell src/content/**/*.{md,mdx}",
     "postbuild": "pagefind --site ${STATIC_OUTPUT_DIR:-.vercel/output/static}",
     "astro": "astro"
   },
@@ -35,6 +36,7 @@
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/typography": "^0.5.10",
+    "cspell": "^8.0.0",
     "prettier": "^3.0.3",
     "prettier-plugin-astro": "^0.12.0",
     "prettier-plugin-svelte": "^3.0.3",

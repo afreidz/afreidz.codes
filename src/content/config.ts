@@ -1,3 +1,4 @@
+import { FEELINGS } from "@/config";
 import { z, defineCollection } from "astro:content";
 
 function dedupeAndLower(array: string[]) {
@@ -5,15 +6,6 @@ function dedupeAndLower(array: string[]) {
   const lower = array.map((s) => s.toLowerCase());
   return Array.from(new Set(lower));
 }
-
-export const FEELINGS = [
-  "smart-assed",
-  "opinionated",
-  "angry",
-  "extatic",
-  "infected",
-  "copacetic",
-] as const;
 
 const schema = z.object({
   title: z.string().max(60),
