@@ -12,6 +12,8 @@ const resp = await fetch(`${Astro.url.origin}/api/auth/verify`, {
 });
 
 if (resp.status !== 200) return Astro.redirect("/admin/signin");
+
+export const prerender = false;
 ---
 
 <Layout title="Create a post" splash="true" ignore>
