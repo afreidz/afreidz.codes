@@ -1,6 +1,9 @@
 import jwt from "jsonwebtoken";
 import type { APIRoute } from "astro";
 
+export const prerender = false;
+export const runtime = "edge";
+
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   const formData = await request.formData();
   const password = formData.get("password")?.toString();

@@ -1,6 +1,9 @@
 import jwt from "jsonwebtoken";
 import type { APIRoute } from "astro";
 
+export const prerender = false;
+export const runtime = "edge";
+
 export const GET: APIRoute = async ({ request }) => {
   let token =
     request.headers.get("x-access-token") ||
