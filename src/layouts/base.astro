@@ -113,7 +113,7 @@ const metaTitle = !title ? siteConfig.title : `${title} • ${siteConfig.title}`
     data-pagefind-ignore={ignore}
   >
     <SkipLink />
-    {splash && <div class="absolute inset-0 bg-grid" />}
+    {splash && <div class="absolute inset-0 bg-grid -z-10" />}
     {!splash && <Header />}
     <slot />
     {!splash && <Footer />}
