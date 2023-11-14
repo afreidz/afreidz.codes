@@ -1,12 +1,12 @@
 ---
+import Icon from "astro-icon";
 import Giscus from "@giscus/svelte";
-import TOC from "@/components/toc.astro";
 import Hero from "@/components/hero.astro";
 import type { MarkdownHeading } from "astro";
 import BaseLayout from "@/layouts/base.astro";
 import PostNav from "@/components/postNav.svelte";
+import TOC from "@/root/src/components/toc.svelte";
 import type { CollectionEntry } from "astro:content";
-import Icon from "astro-icon";
 
 type Props = {
   headings: MarkdownHeading[];
@@ -24,11 +24,18 @@ const { post, headings } = Astro.props;
 >
   <main id="main" class="flex-1 lg:flex">
     <aside class="flex-1 order-2 flex flex-col-reverse justify-between m-4">
-      <PostNav client:only>
+      <PostNav client:only toc={headings}>
         <Icon name="ic:baseline-arrow-back" slot="home" />
         <Icon name="ic:baseline-arrow-upward" slot="top" />
+        <Icon name="ic:baseline-toc" slot="toc" />
       </PostNav>
-      {!!headings.length && <TOC {headings} />}
+      {
+        !!headings.length && (
+          <div class="sticky top-36 hidden w-full min-w-[200px] h-max lg:flex flex-col items-center">
+            <TOC {headings} client:load />
+          </div>
+        )
+      }
     </aside>
     <article
       data-pagefind-body
