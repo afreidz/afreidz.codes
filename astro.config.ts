@@ -19,6 +19,11 @@ export default defineConfig({
         external: ["/pagefind/pagefind.js"],
       },
     },
+    server: {
+      watch: {
+        ignored: ["**/tmp/**"],
+      },
+    },
   },
   output: "hybrid",
   adapter: vercel({

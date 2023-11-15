@@ -7,8 +7,8 @@ function dedupeAndLower(array: string[]) {
   return Array.from(new Set(lower));
 }
 
-const schema = z.object({
-  title: z.string().max(60),
+export const schema = z.object({
+  title: z.string().min(3).max(60),
   description: z.string().min(50).max(160),
   feeling: z.enum(FEELINGS),
   publishedDate: z

@@ -12,6 +12,7 @@
 
   interface $$Events {
     remove: CustomEvent;
+    focus: Event & { currentTarget: HTMLInputElement };
     change: Event & { currentTarget: HTMLInputElement };
   }
 
@@ -37,11 +38,18 @@
       class="accent-accent-200"
       bind:checked
       on:change
+      on:focus
       {...$$restProps}
     />
   {:else}
     <span class="flex">
-      <input bind:value on:change class:flex-1={true} {...$$restProps} />
+      <input
+        bind:value
+        on:change
+        on:focus
+        class:flex-1={true}
+        {...$$restProps}
+      />
       {#if removeable}
         <button
           on:click={() => dispatch("remove")}
