@@ -1,19 +1,33 @@
 <script lang="ts">
   import { marked } from "marked";
   import { createEventDispatcher } from "svelte";
+  import TLDR from "@/components/post/tldr.svelte";
+  import Sidenote from "@/components/post/sidenote.svelte";
 
   let preview = false;
   let content: string = "";
   let removeDisable = false;
   let textbox: HTMLDivElement;
   let dispatch = createEventDispatcher();
+  let type: "markdown" | "tldr" | "sidenote" = "markdown";
 
-  export { content, preview, removeDisable };
+  export { content, preview, removeDisable, type };
 </script>
 
 {#if preview}
-  {@html marked.parse(content)}
+  {#if type === "sidenote"}
+    <Sidenote>
+      {@html marked.parse(content)}
+    </Sidenote>
+  {:else if type === "tldr"}
+    <TLDR as="span">
+      {@html marked.parse(content)}
+    </TLDR>
+  {:else}
+    {@html marked.parse(content)}
+  {/if}
 {:else}
+  <span class="text-sm">Type: <strong>{type}</strong></span>
   <section class="flex items-start mb-6">
     <div
       on:input={() => (content = textbox.innerText)}

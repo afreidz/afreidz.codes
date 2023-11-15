@@ -4,11 +4,11 @@
   import { getAllTags } from "@/utils/data";
   import type { PostSchema } from "@/content/config";
   import Field from "@/components/admin/field.svelte";
-  import Ytplayer from "@/components/ytplayer.svelte";
+  import Ytplayer from "@/components/post/ytplayer.svelte";
   import Markdown from "@/components/admin/markdown.svelte";
 
   type ContentSection = {
-    type: "markdown";
+    type: "markdown" | "tldr" | "sidenote";
     content: string;
   };
 
@@ -148,6 +148,7 @@
   {#each postData.content as section, i}
     {#if section.type !== "youtube"}
       <Markdown
+        type={section.type}
         on:remove={() => {
           postData.content = postData.content.filter((c) => c !== section);
         }}
@@ -177,6 +178,8 @@
       >
         <option value="default">Add a section</option>
         <option value="markdown">Markdown</option>
+        <option value="tldr">TL;DR</option>
+        <option value="sidenote">Sidenote</option>
         <option value="youtube">YouTube</option>
       </select>
     </footer>
