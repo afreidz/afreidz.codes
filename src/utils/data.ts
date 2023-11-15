@@ -190,7 +190,9 @@ import Sidenote from "@/components/post/sidenote.svelte";
   });
   if (!resp.ok) {
     throw new Error(
-      `<strong>ERROR:</strong> <span>${await resp.text()}</span>`,
+      `<strong>ERROR:</strong> <span>${
+        (await resp.text()) ?? "unknown"
+      }</span>`,
     );
   }
 }

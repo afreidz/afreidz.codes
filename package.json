@@ -33,9 +33,9 @@
     "jsonwebtoken": "^9.0.2",
     "marked": "^10.0.0",
     "mdast-util-to-string": "^4.0.0",
+    "nodegit": "^0.28.0-alpha.18",
     "pagefind": "^1.0.3",
     "reading-time": "^1.5.0",
-    "simple-git": "^3.20.0",
     "svelte": "^4.2.1",
     "tailwindcss": "^3.3.3"
   },
@@ -44,6 +44,7 @@
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/typography": "^0.5.10",
     "@types/jsonwebtoken": "^9.0.5",
+    "@types/nodegit": "^0.28.7",
     "cspell": "^8.0.0",
     "prettier": "^3.0.3",
     "prettier-plugin-astro": "^0.12.0",

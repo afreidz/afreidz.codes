@@ -12,6 +12,7 @@
   import Field from "@/components/admin/field.svelte";
   import Ytplayer from "@/components/post/ytplayer.svelte";
   import Markdown from "@/components/admin/markdown.svelte";
+  import { fade } from "svelte/transition";
 
   let newTag: string;
   let preview = false;
@@ -59,6 +60,10 @@
 
   $: if (postData.title && !customSlug) {
     postData.slug = postData.title.toLocaleLowerCase().replaceAll(" ", "-");
+  }
+
+  $: if (error) {
+    setTimeout(() => (error = null), 5000);
   }
 
   function changePublishDate(date: Date | null) {
@@ -215,6 +220,7 @@
   <footer class="mt-auto flex justify-center lg:justify-end items-end">
     {#if error}
       <div
+        transition:fade
         class="p-4 m-3 border border-accent-200 rounded-md text-accent-200 bg-accent-200/5"
       >
         {@html error.message}

@@ -1,5 +1,5 @@
+import git from "nodegit";
 import jwt from "jsonwebtoken";
-import gitClient from "simple-git";
 import type { APIRoute } from "astro";
 import { repository } from "@/root/package.json";
 
@@ -20,10 +20,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 
   console.log(slug, content);
 
-  const git = gitClient();
-  await git.clone(repository.url, "./tmp", {
-    "--filter": "blob:none",
-    "--depth": 1,
+  await git.Clone(repository.url, "tmp", {
+    checkoutBranch: "preview",
   });
 
   console.log("Cloned");
