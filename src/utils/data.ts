@@ -1,7 +1,6 @@
 import { FEELINGS } from "@/config";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
-import { schema, type PostSchema } from "@/content/config";
 
 export type GenericCount = { label: string; count: number };
 
