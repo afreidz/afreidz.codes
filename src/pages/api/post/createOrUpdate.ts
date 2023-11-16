@@ -8,6 +8,8 @@ import { getAllPosts, type PostAndContentSchema } from "@/utils/data";
 export const prerender = false;
 export const runtime = "edge";
 
+const branch = import.meta.env.ADMIN_BRANCH ?? "preview";
+
 function validAuth(cookies: AstroCookies) {
   let token = cookies.get("access-token")?.value;
   if (!token) return false;
@@ -80,7 +82,7 @@ import Sidenote from "@/components/post/sidenote.svelte";
     })
     .join("\n");
 
-  const buffer = Buffer.from([meta, contents].join("\n").trim());
+  const buffer = Buffer.from([meta, contents].join("\n\n").trimStart());
   return buffer.toString("base64");
 }
 
@@ -139,6 +141,7 @@ export const PUT: APIRoute = async ({ request, cookies }) => {
   const existingFile = await octokit.request(
     "GET /repos/{owner}/{repo}/contents/{path}",
     {
+      branch,
       owner: "afreidz",
       repo: "afreidz.codes",
       path: `src/content/post/${post.id}`,
@@ -151,6 +154,7 @@ export const PUT: APIRoute = async ({ request, cookies }) => {
 
   await octokit.request(`PUT /repos/{owner}/{repo}/contents/{path}`, {
     sha,
+    branch,
     content,
     owner: "afreidz",
     repo: "afreidz.codes",
@@ -206,6 +210,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   }
 
   await octokit.request(`PUT /repos/{owner}/{repo}/contents/{path}`, {
+    branch,
     content,
     owner: "afreidz",
     repo: "afreidz.codes",

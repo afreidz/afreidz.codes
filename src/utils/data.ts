@@ -149,7 +149,7 @@ export async function createOrUpdatePost(
     );
   }
 
-  const resp = await fetch("/api/post/create", {
+  const resp = await fetch("/api/post/createOrUpdate", {
     method,
     credentials: "include",
     body: JSON.stringify(post),
