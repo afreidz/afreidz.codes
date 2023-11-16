@@ -1,0 +1,26 @@
+---
+import Icon from "astro-icon";
+import Layout from "@/layouts/base.astro";
+import AdminApp from "@/components/admin/app.svelte";
+
+const accessToken = Astro.cookies.get("access-token");
+
+const resp = await fetch(`${Astro.url.origin}/api/auth/verify`, {
+  headers: {
+    authorization: `Bearer ${accessToken?.value}`,
+  },
+});
+
+if (resp.status !== 200) return Astro.redirect("/admin/signin");
+
+export const prerender = false;
+---
+
+<Layout title="Create a post" splash="true" ignore>
+  <main id="main" class="my-8 flex-1 flex flex-col">
+    <AdminApp client:load>
+      <Icon name="ic:outline-remove-red-eye" slot="preview" />
+      <Icon name="ic:round-code" slot="edit" />
+    </AdminApp>
+  </main>
+</Layout>

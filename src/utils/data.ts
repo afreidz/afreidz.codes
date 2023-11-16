@@ -1,6 +1,7 @@
 import { FEELINGS } from "@/config";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
+import { schema, type PostSchema } from "@/content/config";
 
 export type GenericCount = { label: string; count: number };
 
@@ -103,6 +104,97 @@ function sortByDate(posts: Array<CollectionEntry<"post">>) {
 
 function sortByCount(o: GenericCount[]) {
   return o.sort((a, b) => b.count - a.count);
+}
+
+export type ContentSection = {
+  type: "markdown" | "tldr" | "sidenote";
+  content: string;
+};
+
+export type YTVidSection = {
+  type: "youtube";
+  id: string;
+};
+
+export type ContentUnion = ContentSection | YTVidSection;
+
+export type PostAndContentSchema = PostSchema & {
+  slug: string;
+  content: ContentUnion[];
+};
+
+export async function createPost(post: PostAndContentSchema) {
+  const schemaResults = schema.safeParse(post);
+
+  if (!schemaResults.success)
+    throw new Error(
+      schemaResults.error.errors
+        .map((e) => {
+          return `<strong>${e.path.join(" ").toUpperCase()}:</strong> <span>${
+            e.message
+          }</span>`;
+        })
+        .join("<br/>"),
+    );
+
+  const postSlugs = (await getAllPosts()).map((p) => p.slug) as string[];
+
+  if (postSlugs.includes(post.slug)) {
+    throw new Error(
+      `<strong>SLUG:</strong> <span>\`${post.slug}\` already exists</span>`,
+    );
+  }
+
+  const meta = `
+---
+draft: ${post.draft}
+title: ${post.title}
+feeling: ${post.feeling}
+tags: [${post.tags.join(",")}]
+description: ${post.description}
+publishedDate: ${post.publishedDate.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  })}
+---
+
+import TLDR from "@/components/post/tldr.svelte";
+import YTVideo from "@/components/post/ytplayer.svelte";
+import Sidenote from "@/components/post/sidenote.svelte";
+`;
+
+  const content = post.content
+    .map((c) => {
+      return c.type === "markdown"
+        ? c.content
+        : c.type === "sidenote"
+        ? `<Sidenote>${c.content}</Sidenote>`
+        : c.type === "tldr"
+        ? `<TLDR>${c.content}</TLDR>`
+        : c.type === "youtube"
+        ? `<YTVideo id="${c.id}" client:load />`
+        : "";
+    })
+    .join("\n");
+
+  const file = [meta, content].join("\n");
+
+  const resp = await fetch("/api/post/create", {
+    credentials: "include",
+    method: "post",
+    body: JSON.stringify({
+      slug: post.slug,
+      content: file,
+    }),
+  });
+  if (!resp.ok) {
+    throw new Error(
+      `<strong>ERROR:</strong> <span>${
+        (await resp.text()) ?? "unknown"
+      }</span>`,
+    );
+  }
 }
 
 export const sort = { date: sortByDate, count: sortByCount };
