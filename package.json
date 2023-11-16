@@ -27,8 +27,6 @@
     "astro-icon": "^0.8.1",
     "chart.js": "^4.4.0",
     "chartjs-chart-geo": "^4.2.7",
-    "jsonwebtoken": "^9.0.2",
-    "marked": "^10.0.0",
     "mdast-util-to-string": "^4.0.0",
     "pagefind": "^1.0.3",
     "reading-time": "^1.5.0",
@@ -38,7 +36,6 @@
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/typography": "^0.5.10",
-    "@types/jsonwebtoken": "^9.0.5",
     "cspell": "^8.0.0",
     "prettier": "^3.0.3",
     "prettier-plugin-astro": "^0.12.0",
