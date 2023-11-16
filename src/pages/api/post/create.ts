@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 import { siteConfig } from "@/config";
-import type { APIRoute, AstroCookies } from "astro";
 import { Octokit } from "@octokit/rest";
 import { schema } from "@/content/config";
+import type { APIRoute, AstroCookies } from "astro";
 import { getAllPosts, type PostAndContentSchema } from "@/utils/data";
 
 export const prerender = false;
