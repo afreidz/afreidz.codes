@@ -9,6 +9,7 @@ type Props = {
 };
 
 const { post } = Astro.props;
+const access_token = Astro.cookies.get("access-token");
 const { remarkPluginFrontmatter: frontmatter } = await post.render();
 ---
 
@@ -17,9 +18,19 @@ const { remarkPluginFrontmatter: frontmatter } = await post.render();
     as="h1"
     type="title"
     transition:name={`${post.slug}.title`}
-    class="mb-3 text-center lg:text-left"
+    class="mb-3 text-center lg:text-left flex gap-4"
   >
-    {post.data.title}
+    {
+      !!access_token?.value && (
+        <a
+          href={`/admin/post/edit/${post.slug}`}
+          class="transition-colors flex-none mt-2 hover:bg-accent-100 hover:text-neutral-100 h-8 w-8 rounded-full p-1 border-2 border-accent-100 text-accent-100"
+        >
+          <Icon name="ic:outline-edit" />
+        </a>
+      )
+    }
+    <span class="flex-1">{post.data.title}</span>
   </Heading>
   <p
     class="font-semibold text-center lg:text-left"
