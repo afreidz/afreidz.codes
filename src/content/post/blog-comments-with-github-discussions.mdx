@@ -7,8 +7,8 @@ feeling: "copacetic"
 ---
 
 import Icon from "astro-icon";
-import TLDR from "@/components/tldr.astro";
-import Sidenote from "@/components/sidenote.astro";
+import TLDR from "@/components/post/tldr.svelte";
+import Sidenote from "@/components/post/sidenote.svelte";
 
 Are you a developer who has a blog that NOBODY sees like me? Do you wish you could add comments without any facy database setup, or custom code? If you long for the day where vibrant discussions, with like-minded individuals, respectfully listening to diverse points of view, _with_ an open-mind, are all happening at the end of your elegant prose? I've got the solution for you!
 
@@ -50,7 +50,7 @@ After filling out the form, you end up with a script tag you can embed on your b
 
 This script tag will inject an `iframe` with a UI for interacting with giscus/github. Visitors who want to comment can click the login button, which will login to github, ask to enable the giscus app, and seemlessly redirect back to your blog with the ability to comment! The UI looks very much like github's own comment mechanism which will be ~~painfully~~ familiar to many devs. And thats all you need for a robust, free, comment section that can be used on your STATIC blog!
 
-<Sidenote>
+<Sidenote client:load>
   You can use a myriand of [framework
   components](https://github.com/giscus/giscus-component) instead of the script
   tag. From what I can tell, under the hood these components wrap a custom

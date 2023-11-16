@@ -2,6 +2,9 @@
   "name": "afreidz.codes",
   "type": "module",
   "version": "0.0.1",
+  "repository": {
+    "url": "https://github.com/afreidz/afreidz.codes"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "vercel dev",
@@ -34,6 +37,7 @@
     "tailwindcss": "^3.3.3"
   },
   "devDependencies": {
+    "@iconify/svelte": "^3.1.4",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/typography": "^0.5.10",
     "cspell": "^8.0.0",
