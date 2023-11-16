@@ -145,56 +145,25 @@ export async function createPost(post: PostAndContentSchema) {
     );
   }
 
-  const meta = `
----
-draft: ${post.draft}
-title: ${post.title}
-feeling: ${post.feeling}
-tags: [${post.tags.join(",")}]
-description: ${post.description}
-publishedDate: ${post.publishedDate.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  })}
----
-
-import TLDR from "@/components/post/tldr.svelte";
-import YTVideo from "@/components/post/ytplayer.svelte";
-import Sidenote from "@/components/post/sidenote.svelte";
-`;
-
-  const content = post.content
-    .map((c) => {
-      return c.type === "markdown"
-        ? c.content
-        : c.type === "sidenote"
-        ? `<Sidenote>${c.content}</Sidenote>`
-        : c.type === "tldr"
-        ? `<TLDR>${c.content}</TLDR>`
-        : c.type === "youtube"
-        ? `<YTVideo id="${c.id}" client:load />`
-        : "";
-    })
-    .join("\n");
-
-  const file = [meta, content].join("\n");
-
   const resp = await fetch("/api/post/create", {
     credentials: "include",
     method: "post",
-    body: JSON.stringify({
-      slug: post.slug,
-      content: file,
-    }),
+    body: JSON.stringify(post),
   });
+
   if (!resp.ok) {
-    throw new Error(
-      `<strong>ERROR:</strong> <span>${
-        (await resp.text()) ?? "unknown"
-      }</span>`,
-    );
+    const { errors } = await resp.json();
+
+    const msg = errors
+      .map(
+        (e: string) => `<strong>ERROR:</strong> <span>${e ?? "unknown"}</span>`,
+      )
+      .join("<br/>");
+
+    throw new Error(msg);
   }
+
+  return "Your post has been created";
 }
 
 export const sort = { date: sortByDate, count: sortByCount };

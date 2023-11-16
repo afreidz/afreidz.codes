@@ -18,6 +18,7 @@
   let preview = false;
   let customSlug = false;
   let error: Error | null;
+  let success: string | null;
   let previousTags: PostSchema["tags"] = [];
   let postData: PostAndContentSchema = {
     tags: [],
@@ -66,14 +67,20 @@
     setTimeout(() => (error = null), 5000);
   }
 
+  $: if (success) {
+    setTimeout(() => (success = null), 5000);
+  }
+
   function changePublishDate(date: Date | null) {
     postData.publishedDate = date ?? new Date();
   }
 
   async function handleCreatePost() {
     error = null;
+    success = null;
     try {
-      await createPost(postData);
+      const msg = await createPost(postData);
+      success = msg;
     } catch (e) {
       error = e as Error;
     }
@@ -218,12 +225,18 @@
     {/if}
   </article>
   <footer class="mt-auto flex justify-center lg:justify-end items-end">
-    {#if error}
+    {#if error || success}
       <div
         transition:fade
-        class="p-4 m-3 border border-accent-200 rounded-md text-accent-200 bg-accent-200/5"
+        class:text-accent-200={!!error}
+        class:border-accent-200={!!error}
+        class:text-emerald-500={!!success}
+        class:border-emerald-500={!!success}
+        class="p-4 m-3 border rounded-md {!!success
+          ? 'bg-emerald-500/5'
+          : 'bg-accent-200/5'}"
       >
-        {@html error.message}
+        {@html error?.message || success}
       </div>
     {/if}
     <button
