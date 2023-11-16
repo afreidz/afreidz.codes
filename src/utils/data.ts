@@ -141,14 +141,6 @@ export async function createOrUpdatePost(
         .join("<br/>"),
     );
 
-  const postSlugs = (await getAllPosts()).map((p) => p.slug) as string[];
-
-  if (postSlugs.includes(post.slug)) {
-    throw new Error(
-      `<strong>SLUG:</strong> <span>\`${post.slug}\` already exists</span>`,
-    );
-  }
-
   const resp = await fetch("/api/post/createOrUpdate", {
     method,
     credentials: "include",

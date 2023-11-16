@@ -138,9 +138,8 @@ export const PUT: APIRoute = async ({ request, cookies }) => {
     );
   }
 
-  const existingFile = await octokit.request(
-    "GET /repos/{owner}/{repo}/contents/{path}",
-    {
+  const existingFile = await octokit
+    .request("GET /repos/{owner}/{repo}/contents/{path}", {
       branch,
       owner: "afreidz",
       repo: "afreidz.codes",
@@ -148,9 +147,24 @@ export const PUT: APIRoute = async ({ request, cookies }) => {
       headers: {
         "X-GitHub-Api-Version": "2022-11-28",
       },
-    },
-  );
+    })
+    .catch(() => {
+      return {
+        data: {},
+        errors: [`Could not find "src/content/post/${post.id}" on repository`],
+      };
+    });
+
   const sha = (existingFile.data as any).sha as string;
+
+  if (!sha) {
+    return new Response(
+      JSON.stringify({
+        errors: (existingFile as any).errors,
+      }),
+      { status: 400 },
+    );
+  }
 
   await octokit.request(`PUT /repos/{owner}/{repo}/contents/{path}`, {
     sha,
