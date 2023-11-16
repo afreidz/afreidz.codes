@@ -119,11 +119,15 @@ export type YTVidSection = {
 export type ContentUnion = ContentSection | YTVidSection;
 
 export type PostAndContentSchema = PostSchema & {
+  id?: string;
   slug: string;
   content: ContentUnion[];
 };
 
-export async function createPost(post: PostAndContentSchema) {
+export async function createOrUpdatePost(
+  post: PostAndContentSchema,
+  method: "post" | "put" = "post",
+) {
   const schemaResults = schema.safeParse(post);
 
   if (!schemaResults.success)
@@ -146,8 +150,8 @@ export async function createPost(post: PostAndContentSchema) {
   }
 
   const resp = await fetch("/api/post/create", {
+    method,
     credentials: "include",
-    method: "post",
     body: JSON.stringify(post),
   });
 
@@ -163,7 +167,58 @@ export async function createPost(post: PostAndContentSchema) {
     throw new Error(msg);
   }
 
-  return "Your post has been created";
+  return `Your post has been ${method === "put" ? "updated" : "created"}`;
 }
 
 export const sort = { date: sortByDate, count: sortByCount };
+
+export function postBodyToContent(body: string): ContentUnion[] {
+  const imports = /^import .*$/gm;
+  const ytidAttribute = /id\s*=\s*["']([^"']+)["']/gi;
+  const AllComponents =
+    /<(TLDR|Sidenote)\b[^>]*>((?:(?!<\/\1>).)*)<\/\1>|<YTVideo\b[^>]*\/>/gis;
+
+  let lastIndex = 0;
+  const content: ContentUnion[] = [];
+
+  for (const match of body.matchAll(AllComponents)) {
+    // Add the unmatched part as markdown
+    if (match.index && match.index > lastIndex) {
+      content.push({
+        type: "markdown",
+        content: body.slice(lastIndex, match.index).replace(imports, "").trim(),
+      });
+    }
+
+    // If match[1] exists we have a "content" component
+    if (match[1]) {
+      const data: ContentSection = {
+        type: match[1].toLowerCase() as ContentSection["type"],
+        content: match[2],
+      };
+      content.push(data);
+
+      // If match[1] doesn't exist we have an "id" component
+      // which we get from the 'id' attribute
+    } else {
+      const data: YTVidSection = {
+        type: "youtube",
+        id: Array.from(match[0].matchAll(ytidAttribute))[0]?.[1],
+      };
+      content.push(data);
+    }
+
+    // Update the lastIndex to the end of the current match
+    lastIndex = (match.index ?? 0) + match[0].length;
+  }
+
+  // Add any remaining unmatched part of the string as markdown
+  if (lastIndex < body.length && !!body.slice(lastIndex).trim()) {
+    content.push({
+      type: "markdown",
+      content: body.slice(lastIndex).replace(imports, "").trim(),
+    });
+  }
+
+  return content;
+}

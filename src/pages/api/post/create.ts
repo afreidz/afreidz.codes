@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { siteConfig } from "@/config";
-import type { APIRoute } from "astro";
+import type { APIRoute, AstroCookies } from "astro";
 import { Octokit } from "@octokit/rest";
 import { schema } from "@/content/config";
 import { getAllPosts, type PostAndContentSchema } from "@/utils/data";
@@ -8,59 +8,39 @@ import { getAllPosts, type PostAndContentSchema } from "@/utils/data";
 export const prerender = false;
 export const runtime = "edge";
 
-export const POST: APIRoute = async ({ request, cookies }) => {
+function validAuth(cookies: AstroCookies) {
   let token = cookies.get("access-token")?.value;
-  if (!token)
-    return new Response(JSON.stringify({ errors: ["Authentication failed"] }), {
-      status: 400,
-    });
+  if (!token) return false;
 
   try {
     jwt.verify(token, import.meta.env.JWT_SECRET);
+    return true;
   } catch (e) {
-    return new Response(JSON.stringify({ errors: ["Authentication failed"] }), {
-      status: 400,
-    });
+    return false;
   }
+}
 
-  const post = (await request.json()) as PostAndContentSchema;
-
+function validatePost(post: PostAndContentSchema) {
   if (!post.slug || !post.content || !post.title)
-    return new Response(JSON.stringify({ errors: ["Post invalid"] }), {
-      status: 400,
-    });
-
-  if (!import.meta.env.GH_ACCESS_TOKEN)
-    return new Response(
-      JSON.stringify({ errors: ["Unable to connect to repository"] }),
-      {
-        status: 400,
-      },
-    );
+    return {
+      valid: false,
+      errors: ["Post invalid"],
+    };
 
   const schemaResults = schema.safeParse(post);
 
   if (!schemaResults.success)
-    return new Response(
-      JSON.stringify({
-        errors: schemaResults.error.errors.map((e) => {
-          return `${e.path.join(" ").toUpperCase()}:${e.message}`;
-        }),
+    return {
+      valid: false,
+      errors: schemaResults.error.errors.map((e) => {
+        return `${e.path.join(" ").toUpperCase()}:${e.message}`;
       }),
-      { status: 400 },
-    );
+    };
 
-  const postSlugs = (await getAllPosts()).map((p) => p.slug) as string[];
+  return { valid: true };
+}
 
-  if (postSlugs.includes(post.slug)) {
-    return new Response(
-      JSON.stringify({
-        errors: [`Post "${post.slug}" already exists`],
-      }),
-      { status: 400 },
-    );
-  }
-
+function generateContents(post: PostAndContentSchema) {
   const postDate = new Date(post.publishedDate);
   const day = postDate.toLocaleDateString(siteConfig.locale, {
     day: "numeric",
@@ -101,11 +81,129 @@ import Sidenote from "@/components/post/sidenote.svelte";
     .join("\n");
 
   const buffer = Buffer.from([meta, contents].join("\n").trim());
-  const content = buffer.toString("base64");
+  return buffer.toString("base64");
+}
 
-  const octokit = new Octokit({
-    auth: import.meta.env.GH_ACCESS_TOKEN,
+function getOctokit() {
+  if (!import.meta.env.GH_ACCESS_TOKEN)
+    return { errors: ["Unable to connect to repository"], octokit: null };
+
+  try {
+    const octokit = new Octokit({
+      auth: import.meta.env.GH_ACCESS_TOKEN,
+    });
+
+    return { errors: [], octokit };
+  } catch (e) {
+    return { errors: ["Unable to connect to repository"], octokit: null };
+  }
+}
+
+export const PUT: APIRoute = async ({ request, cookies }) => {
+  if (!validAuth(cookies))
+    return new Response(JSON.stringify({ errors: ["Authentication failed"] }), {
+      status: 400,
+    });
+
+  const post = (await request.json()) as PostAndContentSchema;
+  const postResults = validatePost(post);
+
+  if (!postResults.valid)
+    return new Response(JSON.stringify({ errors: postResults.errors }), {
+      status: 400,
+    });
+
+  const postIds = (await getAllPosts()).map((p) => p.id) as string[];
+
+  if (!post.id || !postIds.includes(post.id)) {
+    return new Response(
+      JSON.stringify({
+        errors: [`Post "${post.slug}" does not exist`],
+      }),
+      { status: 400 },
+    );
+  }
+
+  const content = generateContents(post);
+  const { errors, octokit } = getOctokit();
+
+  if (!octokit) {
+    return new Response(
+      JSON.stringify({
+        errors,
+      }),
+      { status: 400 },
+    );
+  }
+
+  const existingFile = await octokit.request(
+    "GET /repos/{owner}/{repo}/contents/{path}",
+    {
+      owner: "afreidz",
+      repo: "afreidz.codes",
+      path: `src/content/post/${post.id}`,
+      headers: {
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+    },
+  );
+  const sha = (existingFile.data as any).sha as string;
+
+  await octokit.request(`PUT /repos/{owner}/{repo}/contents/{path}`, {
+    sha,
+    content,
+    owner: "afreidz",
+    repo: "afreidz.codes",
+    path: `src/content/post/${post.id}`,
+    message: `ADMIN: updates post "${post.title}"`,
+    committer: {
+      name: "afreidz.codes admin",
+      email: "me@afreidz.codes",
+    },
+    headers: {
+      "X-GitHub-Api-Version": "2022-11-28",
+    },
   });
+
+  return new Response("success", { status: 200 });
+};
+
+export const POST: APIRoute = async ({ request, cookies }) => {
+  if (!validAuth(cookies))
+    return new Response(JSON.stringify({ errors: ["Authentication failed"] }), {
+      status: 400,
+    });
+
+  const post = (await request.json()) as PostAndContentSchema;
+  const postResults = validatePost(post);
+
+  if (!postResults.valid)
+    return new Response(JSON.stringify({ errors: postResults.errors }), {
+      status: 400,
+    });
+
+  const postSlugs = (await getAllPosts()).map((p) => p.slug) as string[];
+
+  if (postSlugs.includes(post.slug)) {
+    return new Response(
+      JSON.stringify({
+        errors: [`Post "${post.slug}" already exists`],
+      }),
+      { status: 400 },
+    );
+  }
+
+  const content = generateContents(post);
+  const { errors, octokit } = getOctokit();
+
+  if (!octokit) {
+    return new Response(
+      JSON.stringify({
+        errors,
+      }),
+      { status: 400 },
+    );
+  }
 
   await octokit.request(`PUT /repos/{owner}/{repo}/contents/{path}`, {
     content,

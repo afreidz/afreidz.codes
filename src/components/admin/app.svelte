@@ -1,12 +1,13 @@
 <script lang="ts">
   import {
     getAllTags,
-    createPost,
     type ContentUnion,
+    createOrUpdatePost,
     type PostAndContentSchema,
   } from "@/utils/data";
 
   import { onMount } from "svelte";
+  import Icon from "@iconify/svelte";
   import { FEELINGS } from "@/config";
   import { fade } from "svelte/transition";
   import { type PostSchema } from "@/content/config";
@@ -19,8 +20,9 @@
   let customSlug = false;
   let error: Error | null;
   let success: string | null;
+  let method: "post" | "put" = "post";
   let previousTags: PostSchema["tags"] = [];
-  let postData: PostAndContentSchema = {
+  let post: PostAndContentSchema = {
     tags: [],
     slug: "",
     title: "",
@@ -39,16 +41,16 @@
     let type = e.currentTarget.value as ContentUnion["type"];
 
     if (type === "youtube") {
-      postData.content = [
-        ...postData.content,
+      post.content = [
+        ...post.content,
         {
           type: "youtube",
           id: "",
         },
       ];
     } else {
-      postData.content = [
-        ...postData.content,
+      post.content = [
+        ...post.content,
         {
           type,
           content: "add some **markdown**",
@@ -59,8 +61,8 @@
     e.currentTarget.value = "default";
   }
 
-  $: if (postData.title && !customSlug) {
-    postData.slug = postData.title.toLocaleLowerCase().replaceAll(" ", "-");
+  $: if (post.title && !customSlug) {
+    post.slug = post.title.toLocaleLowerCase().replaceAll(" ", "-");
   }
 
   $: if (error) {
@@ -72,25 +74,32 @@
   }
 
   function changePublishDate(date: Date | null) {
-    postData.publishedDate = date ?? new Date();
+    post.publishedDate = date ?? new Date();
   }
 
-  async function handleCreatePost() {
+  async function handlePostAction() {
     error = null;
     success = null;
     try {
-      const msg = await createPost(postData);
+      createOrUpdatePost;
+      const msg = await createOrUpdatePost(post, method);
       success = msg;
     } catch (e) {
       error = e as Error;
     }
   }
+
+  export { method, post };
 </script>
 
-<form class="contents" on:submit|preventDefault={handleCreatePost}>
+<form class="contents" on:submit|preventDefault={handlePostAction}>
   <header class="flex justify-between">
     <h1 class="mb-6 font-bold text-3xl lg:text-4xl text-gradient-100">
-      {preview ? postData.title || "No Title!" : "Create a post"}
+      {preview
+        ? post.title || "No Title!"
+        : method === "post"
+        ? "Create a post"
+        : "Edit post"}
     </h1>
     <button
       type="button"
@@ -99,9 +108,9 @@
     >
       <span class="sr-only">{preview ? "edit post" : "preview post"}</span>
       {#if preview}
-        <slot name="edit" />
+        <Icon icon="ic:round-code" />
       {:else}
-        <slot name="preview" />
+        <Icon icon="ic:outline-remove-red-eye" />
       {/if}
     </button>
   </header>
@@ -115,13 +124,13 @@
           label="Title"
           minlength={3}
           maxlength={60}
-          bind:value={postData.title}
+          bind:value={post.title}
           class="flex-1"
         />
         <Field
           label="Draft"
           type="checkbox"
-          bind:checked={postData.draft}
+          bind:checked={post.draft}
           class="flex-none"
         />
       </section>
@@ -130,9 +139,9 @@
         label="Slug"
         on:focus={() => (customSlug = true)}
         on:change={() => {
-          if (!postData.slug.length) customSlug = false;
+          if (!post.slug.length) customSlug = false;
         }}
-        bind:value={postData.slug}
+        bind:value={post.slug}
         class="flex-1"
       />
 
@@ -140,7 +149,7 @@
         label="Description"
         minlength={50}
         maxlength={160}
-        bind:value={postData.description}
+        bind:value={post.description}
       />
 
       <section class="lg:flex gap-8 flex-wrap">
@@ -149,11 +158,11 @@
           class="flex-1"
           label="Published Date"
           on:change={(e) => changePublishDate(e.currentTarget.valueAsDate)}
-          value={postData.publishedDate.toISOString().substring(0, 10)}
+          value={post.publishedDate.toISOString().substring(0, 10)}
         />
 
         <Field label="Feeling" class="flex-1">
-          <select bind:value={postData.feeling}>
+          <select bind:value={post.feeling}>
             {#each FEELINGS as feeling}
               <option>{feeling}</option>
             {/each}
@@ -175,21 +184,21 @@
           </Field>
         </form>
         <Field label="Tags" class="flex-1">
-          <select bind:value={postData.tags} multiple>
+          <select bind:value={post.tags} multiple>
             {#each previousTags as tag}
-              <option selected={postData.tags.includes(tag)}>{tag}</option>
+              <option selected={post.tags.includes(tag)}>{tag}</option>
             {/each}
           </select>
         </Field>
       </section>
     {/if}
 
-    {#each postData.content as section, i}
+    {#each post.content as section, i}
       {#if section.type !== "youtube"}
         <Markdown
           type={section.type}
           on:remove={() => {
-            postData.content = postData.content.filter((c) => c !== section);
+            post.content = post.content.filter((c) => c !== section);
           }}
           {preview}
           bind:content={section.content}
@@ -203,7 +212,7 @@
             label="YouTube ID"
             bind:value={section.id}
             on:remove={() => {
-              postData.content = postData.content.filter((c) => c !== section);
+              post.content = post.content.filter((c) => c !== section);
             }}
           />
         {/if}

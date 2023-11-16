@@ -4,9 +4,7 @@ import me from "@/assets/me.jpg";
 import { Image } from "astro:assets";
 import Search from "@/components/search.svelte";
 
-type Props = {
-  back?: string;
-};
+const access_token = Astro.cookies.get("access-token");
 ---
 
 <header
@@ -35,6 +33,16 @@ type Props = {
           class="text-gradient-100 leading-none">.codes</span
         >
       </a>
+      {
+        !!access_token?.value && (
+          <a
+            href="/admin/post/create"
+            class="transition-colors mt-2 hover:bg-accent-100 hover:text-neutral-100 h-8 w-8 rounded-full p-1 border-2 border-accent-100 text-accent-100"
+          >
+            <Icon name="ic:outline-add" />
+          </a>
+        )
+      }
     </div>
   </div>
   <Search client:only>

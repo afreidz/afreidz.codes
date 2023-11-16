@@ -1,0 +1,39 @@
+---
+import Layout from "@/layouts/base.astro";
+import AdminApp from "@/components/admin/app.svelte";
+import { getAllPosts, postBodyToContent } from "@/utils/data";
+import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
+
+export const getStaticPaths = (async () => {
+  const posts = await getAllPosts();
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { post } = Astro.props;
+---
+
+<Layout title="Create a post" splash="true" ignore>
+  <main id="main" class="my-8 flex-1 flex flex-col">
+    <AdminApp
+      client:load
+      method="put"
+      post={{
+        id: post.id,
+        slug: post.slug,
+        tags: post.data.tags,
+        draft: post.data.draft,
+        title: post.data.title,
+        updatedDate: new Date(),
+        feeling: post.data.feeling,
+        description: post.data.description,
+        publishedDate: post.data.publishedDate,
+        content: postBodyToContent(post.body),
+      }}
+    />
+  </main>
+</Layout>

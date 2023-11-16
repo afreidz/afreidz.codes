@@ -3,8 +3,10 @@ import Date from "@/components/date.astro";
 import BaseLayout from "@/layouts/base.astro";
 import { getAllPosts, sort } from "@/utils/data";
 import Heading from "@/components/heading.astro";
+import Icon from "astro-icon";
 
 const posts = sort.date(await getAllPosts());
+const access_token = Astro.cookies.get("access-token");
 ---
 
 <BaseLayout title="All Posts" ignore>
@@ -12,11 +14,19 @@ const posts = sort.date(await getAllPosts());
     <ul class="lg:max-w-[75%]">
       {
         posts.map((post) => (
-          <li class="border-b-2 border-dotted border-default-100/10 group">
+          <li class="border-b-2 border-dotted border-default-100/10 group flex items-center gap-4 lg:gap-6">
+            {!!access_token?.value && (
+              <a
+                href={`/admin/post/edit/${post.slug}`}
+                class="transition-colors mt-2 hover:bg-accent-100 hover:text-neutral-100 h-8 w-8 rounded-full p-1 border-2 border-accent-100 text-accent-100"
+              >
+                <Icon name="ic:outline-edit" />
+              </a>
+            )}
             <a
               rel="prefetch"
               href={`/posts/${post.slug}`}
-              class="flex flex-col gap-2 mb-6 py-4"
+              class="flex flex-1 flex-col gap-2 mb-6 py-4"
             >
               <Date date={post.data.publishedDate} class="opacity-50 text-sm" />
               <Heading
