@@ -24,5 +24,5 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
     path: "/",
   });
 
-  return redirect("/admin/create");
+  return redirect("/admin/post/create");
 };

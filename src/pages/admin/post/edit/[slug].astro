@@ -17,7 +17,7 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 const { post } = Astro.props;
 ---
 
-<Layout title="Create a post" splash="true" ignore>
+<Layout title={`Edit: "${post.data.title}"`} ignore>
   <main id="main" class="my-8 flex-1 flex flex-col">
     <AdminApp
       client:load
@@ -31,8 +31,8 @@ const { post } = Astro.props;
         updatedDate: new Date(),
         feeling: post.data.feeling,
         description: post.data.description,
-        publishedDate: post.data.publishedDate,
         content: postBodyToContent(post.body),
+        publishedDate: post.data.publishedDate,
       }}
     />
   </main>

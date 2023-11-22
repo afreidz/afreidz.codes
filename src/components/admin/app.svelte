@@ -99,7 +99,7 @@
         ? post.title || "No Title!"
         : method === "post"
         ? "Create a post"
-        : "Edit post"}
+        : `Edit: ${post.title}`}
     </h1>
     <button
       type="button"

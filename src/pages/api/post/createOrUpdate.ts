@@ -140,7 +140,7 @@ export const PUT: APIRoute = async ({ request, cookies }) => {
 
   const existingFile = await octokit
     .request("GET /repos/{owner}/{repo}/contents/{path}", {
-      branch,
+      ref: branch,
       owner: "afreidz",
       repo: "afreidz.codes",
       path: `src/content/post/${post.id}`,

@@ -16,7 +16,7 @@ if (resp.status !== 200) return Astro.redirect("/admin/signin");
 export const prerender = false;
 ---
 
-<Layout title="Create a post" splash="true" ignore>
+<Layout title="Create a post" ignore>
   <main id="main" class="my-8 flex-1 flex flex-col">
     <AdminApp client:load />
   </main>
