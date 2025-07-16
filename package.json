@@ -14,9 +14,6 @@
     "postbuild": "pagefind --site ${STATIC_OUTPUT_DIR:-.vercel/output/static}",
     "astro": "astro"
   },
-  "engines": {
-    "node": "22.x"
-  },
   "dependencies": {
     "@astrojs/mdx": "^1.1.2",
     "@astrojs/prefetch": "^0.4.1",
